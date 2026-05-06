@@ -20,7 +20,7 @@
 
 | Network Growth (Stargazers) | Development Velocity (Activity) |
 | :--- | :--- |
-| [![Stargazers over time](https://starchart.cc/devhunter-git/dns-blocklist.svg?variant=adaptive)](https://starchart.cc/devhunter-git/dns-blocklist) | ![Alt](https://repobeats.axiom.co/api/embed/123ca4762935602e381e07ca1550c9d90ddac1a8.svg "Repobeats analytics image") |
+| [![Stargazers over time](https://starchart.cc/devhuntersecurity/dns-blocklist.svg?variant=adaptive)](https://starchart.cc/devhuntersecurity/dns-blocklist) | ![Alt](https://repobeats.axiom.co/api/embed/123ca4762935602e381e07ca1550c9d90ddac1a8.svg "Repobeats analytics image") |
 
 ---
 
@@ -33,19 +33,19 @@ Mitigates threats at the resolution stage:
 * **Malware & C2**: Prevents communication with Command & Control servers.
 * **Anti-Tracking**: Neutralizes invasive telemetry and advertising engines.
 * **Content Filtering**: Policy enforcement for NSFW, Gambling, and high-risk categories.
-* 🔗 [**Access Domain DB**](https://github.com/devhunter-git/dns-blocklist/tree/main/BlockList_DB)
+* 🔗 [**Access Domain DB**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/BlockList_DB)
 
 ### 🚫 2. IP-Layer Reputation List
 L3-level filtering to block high-risk network origins:
 * **Abuse Sources**: Blocks known SSH/FTP bruteforce origins and scanners.
 * **Malicious Ranges**: Prevents ingress/egress from low-reputation CIDR blocks.
-* 🔗 [**Access IP Database**](https://github.com/devhunter-git/dns-blocklist/tree/main/IPLists)
+* 🔗 [**Access IP Database**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/IPLists)
 
 ### ✅ 3. Verified Allowlist (Whitelist)
 Ensures operational continuity by preventing False Positives:
 * Critical CDN nodes, OS Update servers, and essential API endpoints.
 * Community-vetted overrides for high-utility services.
-* 🔗 [**Access Allowlist**](https://github.com/devhunter-git/dns-blocklist/tree/main/WhiteList%20DB)
+* 🔗 [**Access Allowlist**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/WhiteList%20DB)
 
 ---
 
