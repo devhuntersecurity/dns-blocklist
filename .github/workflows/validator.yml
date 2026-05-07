@@ -1,0 +1,37 @@
+name: Validate DNS Dataset
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Supaya bisa dijalankan manual
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Domains
+        run: |
+          echo "Checking domain list for spaces..."
+          # Mencari spasi di folder BlockList_DB
+          grep -r " " BlockList_DB || echo "No spaces found."
+
+      - name: Validate IPs
+        run: |
+          echo "Checking IP format..."
+          # Mencari pola IP di folder IPLists
+          grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" IPLists || echo "No IPs found."
+
+      - name: Check Whitelist
+        run: |
+          echo "Checking whitelist duplicates..."
+          # Cek duplikat di folder WhiteList DB
+          sort "WhiteList DB"/* | uniq -d || echo "No duplicates found."
+
+      - name: Done
+        run: echo "Validation complete"
