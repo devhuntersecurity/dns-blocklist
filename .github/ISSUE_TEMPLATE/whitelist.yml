@@ -1,0 +1,37 @@
+name: "✅ Whitelist / False Positive Request"
+description: "Laporkan situs legal yang tidak sengaja terblokir oleh IdGuard DNS."
+title: "[WHITELIST]: <nama-situs-atau-layanan>"
+labels: ["whitelist", "false-positive"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Mohon maaf atas ketidaknyamanannya. Kami akan segera memverifikasi laporan Anda agar layanan tersebut dapat diakses kembali.
+  - type: input
+    id: domain
+    attributes:
+      label: "Domain yang Terblokir"
+      description: "Masukkan domain lengkap yang ingin dibuka blokirnya."
+      placeholder: "example.com"
+    validations:
+      required: true
+  - type: textarea
+    id: function
+    attributes:
+      label: "Kegunaan Situs/Layanan"
+      description: "Jelaskan secara singkat apa fungsi situs ini agar kami bisa memvalidasinya."
+      placeholder: "Contoh: Portal resmi BPJS atau Server Update Microsoft."
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: "Sumber List (Opsional)"
+      description: "Jika tahu, sebutkan list mana yang memblokirnya (misal: malware-c2.conf)."
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Verifikasi"
+      options:
+        - label: "Saya sudah memastikan situs ini aman dan bukan merupakan malware/phishing."
+          required: true
