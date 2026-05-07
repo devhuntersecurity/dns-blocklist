@@ -1,0 +1,45 @@
+name: "🚫 Threat Ingestion Report"
+description: "Laporkan domain berbahaya (Malware, C2, Phishing) untuk ditambahkan ke IdGuard DNS."
+title: "[BLOCK]: <domain-atau-ancaman>"
+labels: ["enhancement", "threat-intel"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih telah berkontribusi untuk menjaga keamanan ekosistem **IdGuard DNS**. 
+        Laporan Anda akan divalidasi secara otomatis dan manual sebelum dimasukkan ke dalam dataset produksi.
+  - type: input
+    id: domain
+    attributes:
+      label: "Domain / FQDN"
+      description: "Masukkan domain yang ingin diblokir (contoh: malicious-site.com)."
+      placeholder: "example.com"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: "Kategori Ancaman"
+      options:
+        - "Malware & C2"
+        - "Phishing / Fraud"
+        - "Botnet Node"
+        - "Adware / Tracking"
+        - "Gambling / NSFW"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Bukti / Referensi"
+      description: "Sertakan link VirusTotal, URLhaus, atau log yang menunjukkan aktivitas berbahaya."
+      placeholder: "Contoh: https://www.virustotal.com/gui/domain/..."
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: "Validasi Laporan"
+      options:
+        - label: "Saya sudah memastikan domain ini bukan merupakan False Positive (layanan publik legal)."
+          required: true
