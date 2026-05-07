@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🛡️ DevHunter Security DNS Blocklist
 ### *High-Fidelity Intelligence Datasets for DNS-Layer Perimeter Defense*
 
@@ -97,6 +96,4 @@ This project is a **filtering dataset**. It does not include a DNS resolver, fir
 
 ---
 **Engineered by: DevHunter Security** | **License: GPL v3.0**
-=======
-Blocklist & Whitelist for Unbound DNS
->>>>>>> f47e8251 (Update HaGeZi Native Roku Unbound blocklist)
+
