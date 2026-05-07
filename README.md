@@ -88,7 +88,7 @@ Jika dataset intelijen ini memperkuat perimeter jaringan Anda, pertimbangkan unt
 [![Support via Saweria](https://img.shields.io/badge/Support-Saweria-orange?style=for-the-badge)](https://saweria.co/DevHunter)
 
 ### Scan QR Code for Donations
-<img src="documentations/saweria.png" alt="Donation QR Code" width="200" height="200">
+<img src="documentations/qris-donate.png" alt="Donation QR Code" width="200" height="200">
 
 ---
 
