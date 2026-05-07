@@ -10,9 +10,9 @@
 
 ## 📌 Executive Summary
 
-**DevHunter Security DNS Blocklist** provides highly structured, reliable, and continuously audited datasets for precise DNS-level filtering. In a modern threat landscape where attacks evolve in milliseconds, visibility and control at the DNS layer are the cornerstones of a robust **Zero-Trust** architecture.
+**DevHunter Security DNS Blocklist** menyediakan dataset yang terstruktur, andal, dan terus diaudit untuk pemfilteran tingkat DNS yang presisi. Di lanskap ancaman modern di mana serangan berkembang dalam hitungan milidetik, visibilitas dan kontrol pada lapisan DNS adalah landasan dari arsitektur **Zero-Trust** yang kuat.
 
-> 🔐 **Privacy Standard**: This is more than just a list; it is a **Structured Filtering Intelligence** ecosystem designed to segregate malicious and low-trust traffic from legitimate network operations without compromising user privacy.
+> 🔐 **Privacy Standard**: Ini lebih dari sekadar daftar; ini adalah ekosistem **Structured Filtering Intelligence** yang dirancang untuk memisahkan lalu lintas berbahaya dan rendah kepercayaan dari operasional jaringan yang sah tanpa mengompromikan privasi pengguna.
 
 ---
 
@@ -20,31 +20,31 @@
 
 | Network Growth (Stargazers) | Development Velocity (Activity) |
 | :--- | :--- |
-| [![Stargazers over time](https://starchart.cc/devhuntersecurity/dns-blocklist.svg?variant=adaptive)](https://starchart.cc/devhuntersecurity/dns-blocklist) | ![Alt](https://repobeats.axiom.co/api/embed/123ca4762935602e381e07ca1550c9d90ddac1a8.svg "Repobeats analytics image") |
+| [![Stargazers over time](https://starchart.cc/devhuntersecurity/dns-blocklist.svg?variant=adaptive)](https://starchart.cc/devhuntersecurity/dns-blocklist) | ![Activity](https://repobeats.axiom.co/api/embed/123ca4762935602e381e07ca1550c9d90ddac1a8.svg) |
 
 ---
 
 ## 📦 Intelligence Components
 
-Our datasets are categorized into three core modules for seamless integration into your security policy:
+Dataset kami dikategorikan menjadi tiga modul inti untuk integrasi mulus ke dalam kebijakan keamanan Anda:
 
 ### 🚫 1. Domain-Level Blocklist (FQDN)
-Mitigates threats at the resolution stage:
-* **Malware & C2**: Prevents communication with Command & Control servers.
-* **Anti-Tracking**: Neutralizes invasive telemetry and advertising engines.
-* **Content Filtering**: Policy enforcement for NSFW, Gambling, and high-risk categories.
+Mitigasi ancaman pada tahap resolusi:
+* **Malware & C2**: Mencegah komunikasi dengan server Command & Control.
+* **Anti-Tracking**: Menetralkan telemetri invasif dan mesin periklanan.
+* **Content Filtering**: Penegakan kebijakan untuk NSFW, Perjudian, dan kategori berisiko tinggi.
 * 🔗 [**Access Domain DB**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/BlockList_DB)
 
 ### 🚫 2. IP-Layer Reputation List
-L3-level filtering to block high-risk network origins:
-* **Abuse Sources**: Blocks known SSH/FTP bruteforce origins and scanners.
-* **Malicious Ranges**: Prevents ingress/egress from low-reputation CIDR blocks.
+Filter tingkat L3 untuk memblokir asal jaringan berisiko tinggi:
+* **Abuse Sources**: Memblokir sumber bruteforce SSH/FTP dan scanner yang dikenal.
+* **Malicious Ranges**: Mencegah ingress/egress dari blok CIDR bereputasi rendah.
 * 🔗 [**Access IP Database**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/IPLists)
 
 ### ✅ 3. Verified Allowlist (Whitelist)
-Ensures operational continuity by preventing False Positives:
-* Critical CDN nodes, OS Update servers, and essential API endpoints.
-* Community-vetted overrides for high-utility services.
+Menjamin kontinuitas operasional dengan mencegah *False Positives*:
+* Node CDN kritis, server Pembaruan OS, dan titik akhir API esensial.
+* Override yang telah diperiksa komunitas untuk layanan utilitas tinggi.
 * 🔗 [**Access Allowlist**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/WhiteList%20DB)
 
 ---
@@ -53,47 +53,47 @@ Ensures operational continuity by preventing False Positives:
 
 | Tier | Protection Scope | Ideal Use Case |
 | :--- | :--- | :--- |
-| **🟢 Lite** | High-Confidence Malware | Zero-impact security for sensitive production servers. |
-| **🟡 Normal** | Malware + Tracking + Ads | Recommended for general Corporate & Home networks. |
-| **🔴 Aggressive** | Full Shield (Inc. NSFW/Gambling) | Maximum enforcement for Educational & High-Security zones. |
+| **🟢 Lite** | High-Confidence Malware | Keamanan tanpa dampak untuk server produksi yang sensitif. |
+| **🟡 Normal** | Malware + Tracking + Ads | Direkomendasikan untuk jaringan Korporat & Rumah tangga. |
+| **🔴 Aggressive** | Full Shield (Inc. NSFW/Gambling) | Penegakan maksimum untuk Zona Pendidikan & Keamanan Tinggi. |
 
 ---
 
 ## ⚙️ Deployment & Orchestration
 
 ### 🧱 Native Unbound Integration
-This dataset is optimized for **Unbound DNS** native syntax. Implementing high-performance filtering is as simple as importing the configuration:
-🔗 [**View Production-Ready server.conf**](https://github.com/devhunter-git/dns-blocklist/blob/main/server.conf)
+Dataset ini dioptimalkan untuk sintaks asli **Unbound DNS**. Implementasi pemfilteran berkinerja tinggi semudah mengimpor konfigurasi:
+🔗 [**View Production-Ready server.conf**](https://github.com/devhuntersecurity/dns-blocklist/blob/main/server.conf)
 
 ### 🔄 Automation & Synchronicity
-* **Update Frequency**: Automated sync every **6 hours**.
-* **Distribution**: Distributed via GitHub's global edge infrastructure for high availability.
+* **Update Frequency**: Sinkronisasi otomatis setiap **6 jam**.
+* **Distribution**: Didistribusikan melalui infrastruktur global edge GitHub untuk ketersediaan tinggi.
 
 ---
 
 ## 📬 Intelligence Reporting
 
-Community-driven intelligence is vital for maintaining dataset fidelity. 
+Intelijen berbasis komunitas sangat penting untuk menjaga integritas dataset.
 
-* 🚫 **Threat Ingestion**: [Request Blocklist Addition](https://github.com/devhunter-git/dns-blocklist/issues/new?template=blocklist.yml)
-* ✅ **False Positive Report**: [Request Whitelist Entry](https://github.com/devhunter-git/dns-blocklist/issues/new?template=whitelist.yml)
-* 🐞 **Core Issue**: [Technical Bug Report](https://github.com/devhunter-git/dns-blocklist/issues/new?template=bug.yml)
+* 🚫 **Threat Ingestion**: [Request Blocklist Addition](https://github.com/devhuntersecurity/dns-blocklist/issues/new?template=blocklist.yml)
+* ✅ **False Positive Report**: [Request Whitelist Entry](https://github.com/devhuntersecurity/dns-blocklist/issues/new?template=whitelist.yml)
+* 🐞 **Core Issue**: [Technical Bug Report](https://github.com/devhuntersecurity/dns-blocklist/issues/new?template=bug.yml)
 
 ---
 
 ## 💰 Support & Sustainability
 
-If this intelligence dataset strengthens your network perimeter, consider supporting our continuous threat research:
+Jika dataset intelijen ini memperkuat perimeter jaringan Anda, pertimbangkan untuk mendukung riset ancaman berkelanjutan kami:
 
 [![Support via Saweria](https://img.shields.io/badge/Support-Saweria-orange?style=for-the-badge)](https://saweria.co/DevHunter)
+
 ### Scan QR Code for Donations
 <img src="documentations/saweria.png" alt="Donation QR Code" width="200" height="200">
 
 ---
 
 ## ⚠️ Disclaimer
-This project is a **filtering dataset**. It does not include a DNS resolver, firewall engine, or active security logic. Always validate configurations in a staging environment before wide-scale production deployment.
+Proyek ini adalah **filtering dataset**. Tidak mencakup resolver DNS, mesin firewall, atau logika keamanan aktif. Selalu validasi konfigurasi di lingkungan staging sebelum penerapan produksi skala luas.
 
 ---
 **Engineered by: DevHunter Security** | **License: GPL v3.0**
-
