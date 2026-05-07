@@ -1,0 +1,34 @@
+name: "🐞 Technical Bug Report"
+description: "Laporkan masalah pada skrip atau konfigurasi infrastruktur DNS."
+title: "[BUG]: <deskripsi-singkat-masalah>"
+labels: ["bug", "technical-issue"]
+body:
+  - type: input
+    id: environment
+    attributes:
+      label: "OS & Versi Unbound"
+      description: "Contoh: Ubuntu 24.04 / Unbound 1.19"
+      placeholder: "Ubuntu 22.04 LTS"
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: "Deskripsi Masalah"
+      description: "Apa yang terjadi? Sertakan pesan error jika ada."
+      placeholder: "Contoh: Skrip update error saat mencoba mengunduh file..."
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Log Error (Opsional)"
+      render: bash
+      description: "Tempelkan output dari terminal atau log Unbound di sini."
+  - type: checkboxes
+    id: validation
+    attributes:
+      label: "Pre-check"
+      options:
+        - label: "Saya sudah menjalankan 'unbound-checkconf' dan tidak ada kesalahan sintaks."
+          required: true
