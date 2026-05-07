@@ -1,0 +1,63 @@
+<<<<<<< HEAD
+#!/bin/bash
+
+BLOCKLIST_DIR="/etc/unbound/unbound.conf.d/malware"
+WHITELIST_DIR="/etc/unbound/unbound.conf.d/zzz-whitelist"
+echo "?? Hitung domain Unbound"
+echo
+
+BLOCKLIST_DOMAINS=$(grep -Rh '^local-' "$BLOCKLIST_DIR" | awk '{print $2}' | tr -d '"' | sort -u)
+TOTAL_BLOCKLIST=$(echo "$BLOCKLIST_DOMAINS" | wc -l)
+
+if [ -d "$WHITELIST_DIR" ]; then
+    WHITELIST_DOMAINS=$(grep -Rh '^local-' "$WHITELIST_DIR" | awk '{print $2}' | tr -d '"' | sort -u)
+    TOTAL_WHITELIST=$(echo "$WHITELIST_DOMAINS" | wc -l)
+else
+    TOTAL_WHITELIST=0
+fi
+
+echo "? TOTAL domain blocklist : $TOTAL_BLOCKLIST"
+echo "? TOTAL domain whitelist : $TOTAL_WHITELIST"
+echo
+
+# Jika mau hitung per subfolder, aktifkan loop ini:
+# echo "?? Jumlah domain per kategori:"
+# echo "----------------------------------"
+# for d in "$BLOCKLIST_DIR"/*; do
+#     if [ -d "$d" ]; then
+#         COUNT=$(grep -Rh '^local-' "$d" | awk '{print $2}' | tr -d '"' | sort -u | wc -l)
+#         printf "%-20s : %s\n" "$(basename "$d")" "$COUNT"
+#     fi
+# done
+=======
+#!/bin/bash
+
+BLOCKLIST_DIR="/etc/unbound/unbound.conf.d/malware"
+WHITELIST_DIR="/etc/unbound/unbound.conf.d/zzz-whitelist"
+echo "?? Hitung domain Unbound"
+echo
+
+BLOCKLIST_DOMAINS=$(grep -Rh '^local-' "$BLOCKLIST_DIR" | awk '{print $2}' | tr -d '"' | sort -u)
+TOTAL_BLOCKLIST=$(echo "$BLOCKLIST_DOMAINS" | wc -l)
+
+if [ -d "$WHITELIST_DIR" ]; then
+    WHITELIST_DOMAINS=$(grep -Rh '^local-' "$WHITELIST_DIR" | awk '{print $2}' | tr -d '"' | sort -u)
+    TOTAL_WHITELIST=$(echo "$WHITELIST_DOMAINS" | wc -l)
+else
+    TOTAL_WHITELIST=0
+fi
+
+echo "? TOTAL domain blocklist : $TOTAL_BLOCKLIST"
+echo "? TOTAL domain whitelist : $TOTAL_WHITELIST"
+echo
+
+# Jika mau hitung per subfolder, aktifkan loop ini:
+# echo "?? Jumlah domain per kategori:"
+# echo "----------------------------------"
+# for d in "$BLOCKLIST_DIR"/*; do
+#     if [ -d "$d" ]; then
+#         COUNT=$(grep -Rh '^local-' "$d" | awk '{print $2}' | tr -d '"' | sort -u | wc -l)
+#         printf "%-20s : %s\n" "$(basename "$d")" "$COUNT"
+#     fi
+# done
+>>>>>>> f47e8251 (Update HaGeZi Native Roku Unbound blocklist)
