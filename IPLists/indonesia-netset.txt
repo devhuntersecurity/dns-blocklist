@@ -1,6 +1,6 @@
 # Indonesia NETSET CIDR List
 # Source: ipbl.herrbischoff.com
-# Updated: 09/05/2026  6:03:07,50
+# Updated: 09/05/2026 12:25:42,10
 # Total CIDR: 11146
 # IPv4: 6393
 # IPv6: 4753
