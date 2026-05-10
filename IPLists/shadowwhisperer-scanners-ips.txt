@@ -1,6 +1,6 @@
 # ShadowWhisperer Scanner IP Blocklist
 # Source: https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Other/Scanners
-# Updated: 10/05/2026 21:36:30,33
+# Updated: 11/05/2026  2:13:25,11
 #
 #        File: Other/Scanner
 # Description: Scans the internet for open ports / vulnerabilities
