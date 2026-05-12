@@ -1,6 +1,6 @@
 # AbuseIPDB IP Blocklist
 # Source: https://abuseipdb.tmiland.com/abuseipdb.txt
-# Updated: 12/05/2026 14:04:33,09
+# Updated: 12/05/2026 20:49:38,00
 ### AbuseIPDB - Firewall ip blocklist
 # Blocklist for AbuseIPDB: A list of the most reported IP addresses.
 # Blacklist url: https://abuseipdb.tmiland.com/abuseipdb.txt
