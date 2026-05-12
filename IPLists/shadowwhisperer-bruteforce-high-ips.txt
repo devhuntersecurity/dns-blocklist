@@ -1,6 +1,6 @@
 # ShadowWhisperer High BruteForce IP Blocklist
 # Source: https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/BruteForce/High
-# Updated: 12/05/2026 21:11:25,60
+# Updated: 13/05/2026  2:37:52,46
 #
 #        File: BruteForce/High
 # Description: Connected to my honeypots (More than 20, but less than 80)
