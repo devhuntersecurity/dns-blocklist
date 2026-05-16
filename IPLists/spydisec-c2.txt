@@ -1,6 +1,6 @@
 # SpyDisec OSINT C2 Feed
 # Source: https://spydisec.com/osintc2feed.txt
-# Updated: 16/05/2026  8:43:56,91
+# Updated: 16/05/2026 15:02:53,36
 1.116.73.99
 1.117.77.166
 1.12.231.30
