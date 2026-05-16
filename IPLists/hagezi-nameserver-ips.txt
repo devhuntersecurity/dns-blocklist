@@ -1,6 +1,6 @@
 # Hagezi Nameserver IP Blocklist
 # Source: https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/ips/nameserver.txt
-# Updated: 16/05/2026  2:31:07,19
+# Updated: 16/05/2026  8:32:40,24
 1.0.0.19
 1.0.0.2
 1.0.0.20
