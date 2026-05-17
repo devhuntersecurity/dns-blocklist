@@ -1,6 +1,6 @@
 # ShadowWhisperer Medium BruteForce IP Blocklist
 # Source: https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/BruteForce/Medium
-# Updated: 17/05/2026 14:34:00,44
+# Updated: 18/05/2026  2:16:22,56
 #
 #        File: BruteForce/Medium
 # Description: Connected to my honeypots (More than 5, but less than 20)
