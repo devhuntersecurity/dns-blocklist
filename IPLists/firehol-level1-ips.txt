@@ -1,6 +1,6 @@
 # FireHOL Level1 IP Blocklist
 # Source: https://iplists.firehol.org/files/firehol_level1.netset
-# Updated: 18/05/2026  2:07:45,34
+# Updated: 18/05/2026  8:14:27,76
 
 0.0.0.0/8
 1.10.16.0/20
