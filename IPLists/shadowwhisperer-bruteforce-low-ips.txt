@@ -1,6 +1,6 @@
 # ShadowWhisperer Low BruteForce IP Blocklist
 # Source: https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/BruteForce/Low
-# Updated: 21/05/2026 21:47:11,28
+# Updated: 28/05/2026 10:22:56,02
 #
 #        File: BruteForce/Low
 # Description: Connected to my honeypots (Less than 5)
