@@ -81,6 +81,23 @@ Intelijen berbasis komunitas sangat penting untuk menjaga integritas dataset.
 
 ---
 
+## 📂 Repository File Structure
+
+Untuk memastikan proses deployment berjalan lancar, pastikan struktur direktori repository Anda tersusun rapi seperti berikut:
+
+```text
+dns-blocklist/
+├── BlockList_DB/             # Kumpulan database domain berbahaya (Malware, C2, Ads, Tracker)
+├── IPs for MikroTik/         # Database reputasi IP Layer-3 khusus perangkat MikroTik
+├── WhiteList_DB/             # Daftar putih (Whitelist) untuk mencegah False Positives
+├── documentations/           # Aset dokumentasi pendukung (QRIS Donasi, Logo, dll)
+├── server.conf               # File konfigurasi utama Unbound (Production Ready, 2 vCPU / 8GB RAM)
+├── setup.sh                  # Skrip otomatisasi deployment & instalasi sistem
+├── LICENSE                   # Lisensi perangkat lunak (GNU GPL v3.0)
+└── README.md                 # Dokumentasi utama proyek ini
+```
+---
+
 ## 💰 Support & Sustainability
 
 Jika dataset intelijen ini memperkuat perimeter jaringan Anda, pertimbangkan untuk mendukung riset ancaman berkelanjutan kami:
