@@ -39,7 +39,7 @@ Mitigasi ancaman pada tahap resolusi:
 Filter tingkat L3 untuk memblokir asal jaringan berisiko tinggi:
 * **Abuse Sources**: Memblokir sumber bruteforce SSH/FTP dan scanner yang dikenal.
 * **Malicious Ranges**: Mencegah ingress/egress dari blok CIDR bereputasi rendah.
-* 🔗 [**Access IP Database**]([https://github.com/devhuntersecurity/dns-blocklist/tree/main/IPLists](https://github.com/devhuntersecurity/dns-blocklist/tree/main/IPs%20for%20MikroTik))
+* 🔗 [**Access IP Database**](https://github.com/devhuntersecurity/dns-blocklist/tree/main/IPs%20for%20MikroTik)
 
 ### ✅ 3. Verified Allowlist (Whitelist)
 Menjamin kontinuitas operasional dengan mencegah *False Positives*:
