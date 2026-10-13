@@ -1,0 +1,7 @@
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/WhiteList%20DB/devhunter-whitelist.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/WhiteList%20DB/alsyundawy-whitelist.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/WhiteList%20DB/hagezi-referral-whitelist.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/WhiteList%20DB/shadowwhisperer-whitelist.conf
+
+
+

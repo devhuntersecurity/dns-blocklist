@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+URL_LIST="/usr/local/bin/whitelist-domains.txt"
+OUTPUT="/etc/unbound/unbound.conf.d/zzz-whitelist/zzzz-whitelist.conf"
+
+TMPDIR=$(mktemp -d)
+RAWFILE="$TMPDIR/raw.conf"
+SORTFILE="$TMPDIR/whitelist.conf"
+OUTFILE_TMP="$TMPDIR/output.conf"
+
+trap 'rm -rf "$TMPDIR"' EXIT
+
+# ============================================================
+# VALIDATION
+# ============================================================
+
+if [[ ! -f "$URL_LIST" ]]; then
+    echo "[ERROR] File $URL_LIST tidak ditemukan!"
+    exit 1
+fi
+
+echo "=========================================="
+echo " DevHunter Security Whitelist Updater"
+echo "=========================================="
+echo
+
+echo "[*] Downloading whitelists..."
+
+> "$RAWFILE"
+
+# ============================================================
+# DOWNLOAD + PARSE
+# ============================================================
+
+while IFS= read -r url || [[ -n "$url" ]]; do
+
+    # Skip kosong
+    [[ -z "${url//[[:space:]]/}" ]] && continue
+
+    # Skip komentar
+    [[ "$url" =~ ^[[:space:]]*# ]] && continue
+
+    # Trim whitespace
+    url="${url#"${url%%[![:space:]]*}"}"
+    url="${url%"${url##*[![:space:]]}"}"
+
+    echo "  -> $url"
+
+    if ! curl -fL \
+        --retry 3 \
+        --retry-delay 2 \
+        --connect-timeout 15 \
+        --max-time 300 \
+        -sS "$url" |
+
+        awk '
+        $1 == "local-zone:" {
+
+            domain = $2
+            action = $3
+
+            # Hilangkan quote
+            gsub(/"/, "", domain)
+
+            # Hilangkan trailing dot
+            sub(/\.$/, "", domain)
+
+            # Lowercase
+            domain = tolower(domain)
+
+            # Trim whitespace
+            gsub(/^[[:space:]]+|[[:space:]]+$/, "", domain)
+
+            # Validasi dasar
+            if (domain == "" || domain == ".")
+                next
+
+            if (domain ~ /[[:space:]]/)
+                next
+
+            # Regex validasi domain & TLD (mendukung TLD tunggal seperti "totolink" maupun FQDN)
+            if (domain !~ /^[a-z0-9]([a-z0-9._-]*[a-z0-9])?$/)
+                next
+
+            # Action harus tersedia (misal: transparent, pass, always_transparent)
+            if (action == "")
+                next
+
+            printf "%s\t%s\n", domain, action
+        }
+        ' >> "$RAWFILE"
+    then
+        echo "     [WARNING] Gagal download: $url"
+        continue
+    fi
+
+done < "$URL_LIST"
+
+# ============================================================
+# CHECK RAW
+# ============================================================
+
+TOTAL_RAW=$(wc -l < "$RAWFILE")
+
+if (( TOTAL_RAW == 0 )); then
+    echo
+    echo "[ERROR] Tidak ada data whitelist!"
+    exit 1
+fi
+
+echo
+echo "[*] Total sebelum deduplicate : $TOTAL_RAW"
+
+# ============================================================
+# DEDUPLICATE & SORT
+# ============================================================
+
+awk -F '\t' '
+{
+    domain=$1
+    action=$2
+
+    if (!(domain in seen)) {
+        seen[domain]=1
+        printf "%s\t%s\n", domain, action
+    }
+}
+' "$RAWFILE" |
+LC_ALL=C sort -t $'\t' -k1,1 |
+awk -F '\t' '
+{
+    printf "local-zone: \"%s.\" %s\n", $1, $2
+}
+' > "$SORTFILE"
+
+TOTAL_FINAL=$(wc -l < "$SORTFILE")
+DUPLICATES=$((TOTAL_RAW - TOTAL_FINAL))
+
+# ============================================================
+# GENERATE UNBOUND CONFIG
+# ============================================================
+
+echo "[*] Menulis konfigurasi Unbound..."
+
+{
+    echo "# =========================================="
+    echo "# DevHunter Security Whitelist"
+    echo "# Generated : $(date '+%Y-%m-%d %H:%M:%S %Z')"
+    echo "# =========================================="
+    echo
+    echo "server:"
+    echo
+
+    cat "$SORTFILE"
+
+} > "$OUTFILE_TMP"
+
+# Pastikan direktori tujuan tersedia
+mkdir -p "$(dirname "$OUTPUT")"
+
+# Pindahkan file secara atomik
+mv "$OUTFILE_TMP" "$OUTPUT"
+
+# ============================================================
+# FINAL RESULT
+# ============================================================
+
+echo
+echo "=========================================="
+echo "[✓] Whitelist selesai."
+echo "=========================================="
+
+echo "Saved to : $OUTPUT"
+echo
+echo "Total sebelum deduplicate : $TOTAL_RAW"
+echo "Total unique domains      : $TOTAL_FINAL"
+echo "Duplicate dihapus         : $DUPLICATES"
+
+if (( TOTAL_RAW > 0 )); then
+    DUP_PERCENT=$(awk \
+        -v d="$DUPLICATES" \
+        -v t="$TOTAL_RAW" \
+        'BEGIN {
+            printf "%.2f", (d/t)*100
+        }')
+
+    echo "Duplicate percentage      : ${DUP_PERCENT}%"
+fi

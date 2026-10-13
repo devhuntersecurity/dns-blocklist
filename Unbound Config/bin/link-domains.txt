@@ -1,0 +1,34 @@
+# Lokal / DevHunter
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/devhunter-malicious.conf
+
+# Ads
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Ads/oisd-big.conf
+
+# Gambling & Adult (Trustpositif)
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Gambling/alsyundawy-trustpositif-part1.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Gambling/alsyundawy-trustpositif-part2.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Adult/oisd-nsfw.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Gambling/hagezi-gambling.conf
+
+# Malware
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/stevenblack-unbound.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/threatfox.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/urlhaus-filter-hosts.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/Abuse-ch.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/certpl.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/cyberhost.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/firebog-malicious-green.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/romainmarcoux-full-aa-ab-ac.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/hagezi-tif-part1.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/hagezi-tif-part2.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/Accomplist%20Malicious-Dom%20Top-N%20Unbound.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/tempest-solutions-malware.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/shadowwhisperer-malware.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/Malware/kadhosts-unbound.conf
+
+# DGA & NRD
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/DGA/hagezi-dga7.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/NRD/nrd-1d.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/NRD/nrd-3d.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/NRD/nrd-1w.conf
+https://raw.githubusercontent.com/devhuntersecurity/dns-blocklist/refs/heads/main/BlockList_DB/TLDs/hagezi-spam-tlds.conf

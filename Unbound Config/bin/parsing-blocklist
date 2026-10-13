@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+URL_LIST="/usr/local/bin/link-domains.txt"
+OUTPUT="/etc/unbound/unbound.conf.d/malware/blocklist.conf"
+
+TMPDIR=$(mktemp -d)
+RAWFILE="$TMPDIR/raw.conf"
+SORTFILE="$TMPDIR/blocklist.conf"
+OUTFILE_TMP="$TMPDIR/output.conf"
+
+trap 'rm -rf "$TMPDIR"' EXIT
+
+if [[ ! -f "$URL_LIST" ]]; then
+    echo "[ERROR] File $URL_LIST tidak ditemukan!"
+    exit 1
+fi
+
+echo "=========================================="
+echo " DevHunter Security Blocklist Updater"
+echo "=========================================="
+echo
+
+echo "[*] Downloading blocklists..."
+
+> "$RAWFILE"
+
+while IFS= read -r url || [[ -n "$url" ]]; do
+
+    # Skip komentar dan baris kosong
+    [[ -z "${url//[[:space:]]/}" ]] && continue
+    [[ "$url" =~ ^[[:space:]]*# ]] && continue
+
+    # Hilangkan whitespace di awal/akhir
+    url="${url#"${url%%[![:space:]]*}"}"
+    url="${url%"${url##*[![:space:]]}"}"
+
+    echo "  -> $url"
+
+    if ! curl -fL \
+        --retry 3 \
+        --retry-delay 2 \
+        --connect-timeout 15 \
+        --max-time 300 \
+        -sS "$url" |
+
+        awk '
+        {
+            # Hanya proses baris Unbound local-zone
+            if ($1 != "local-zone:")
+                next
+
+            domain = $2
+
+            # Hilangkan quote
+            gsub(/"/, "", domain)
+
+            # Hilangkan trailing dot
+            sub(/\.$/, "", domain)
+
+            # Lowercase
+            domain = tolower(domain)
+
+            # Trim whitespace
+            gsub(/^[[:space:]]+|[[:space:]]+$/, "", domain)
+
+            # Validasi dasar
+            if (domain == "" || domain == ".")
+                next
+
+            if (domain ~ /[[:space:]]/)
+                next
+
+            # Regex validasi domain & TLD (mendukung TLD tunggal seperti "totolink" maupun FQDN)
+            if (domain !~ /^[a-z0-9]([a-z0-9._-]*[a-z0-9])?$/)
+                next
+
+            print domain
+        }
+        ' >> "$RAWFILE"
+    then
+        echo "     [WARNING] Gagal download: $url"
+        continue
+    fi
+
+done < "$URL_LIST"
+
+# ==================================================
+# CHECK RAW
+# ==================================================
+
+TOTAL_RAW=$(wc -l < "$RAWFILE")
+
+if (( TOTAL_RAW == 0 )); then
+    echo
+    echo "[ERROR] Tidak ada domain yang berhasil diambil!"
+    exit 1
+fi
+
+echo
+echo "[*] Total sebelum deduplicate : $TOTAL_RAW"
+
+# ==================================================
+# DEDUPLICATE
+# ==================================================
+
+LC_ALL=C sort -u "$RAWFILE" > "$SORTFILE"
+
+TOTAL_FINAL=$(wc -l < "$SORTFILE")
+DUPLICATE=$((TOTAL_RAW - TOTAL_FINAL))
+
+# ==================================================
+# WRITE UNBOUND CONFIG
+# ==================================================
+
+echo "[*] Menulis konfigurasi Unbound..."
+
+{
+    echo "# =========================================="
+    echo "# DevHunter Security Blocklist"
+    echo "# Generated : $(date '+%Y-%m-%d %H:%M:%S %Z')"
+    echo "# =========================================="
+    echo
+    echo "server:"
+    echo
+
+    # Menggunakan awk untuk formatting (jauh lebih cepat dari while-loop Bash)
+    awk '{printf "local-zone: \"%s.\" always_nxdomain\n", $1}' "$SORTFILE"
+
+} > "$OUTFILE_TMP"
+
+# Pastikan direktori tujuan ada
+mkdir -p "$(dirname "$OUTPUT")"
+
+# Pindahkan file secara atomik agar file asli tidak korup saat proses berlangsung
+mv "$OUTFILE_TMP" "$OUTPUT"
+
+# ==================================================
+# RESULT
+# ==================================================
+
+echo
+echo "=========================================="
+echo "[✓] Blocklist selesai."
+echo "=========================================="
+
+echo "Saved to : $OUTPUT"
+echo
+echo "Total sebelum deduplicate : $TOTAL_RAW"
+echo "Total unique domains      : $TOTAL_FINAL"
+echo "Duplicate dihapus         : $DUPLICATE"
+
+if (( TOTAL_RAW > 0 )); then
+    DUP_PERCENT=$(awk \
+        -v d="$DUPLICATE" \
+        -v t="$TOTAL_RAW" \
+        'BEGIN { printf "%.2f", (d/t)*100 }')
+
+    echo "Duplicate percentage      : ${DUP_PERCENT}%"
+fi
