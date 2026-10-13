@@ -5,8 +5,8 @@ set -Eeuo pipefail
 # TELEGRAM NOTIFICATION CONFIG
 # ============================================================
 TELEGRAM_ENABLED="true" # Ubah ke "false" jika sedang tidak ingin pakai
-TELEGRAM_BOT_TOKEN="8926755244:AAHg0s6ruUUaGXOP2e_8OdBfau8f5DpHBbM"
-TELEGRAM_CHAT_ID="7615918777"
+TELEGRAM_BOT_TOKEN="{Token API Telegram}"
+TELEGRAM_CHAT_ID="{Chat ID Telegram}"
 
 send_telegram() {
     local message="$1"
