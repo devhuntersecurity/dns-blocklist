@@ -1,4 +1,4 @@
-# Generated on -10-2026T04:03:00Z, source: https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/ips/tif.txt
+# Generated on -10-2026T12:31:00Z, source: https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/ips/tif.txt
 /ip route
 remove [find comment="Hagezi TIF Blackhole"]
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=1.0.218.230 gateway="" routing-table=main
@@ -1276,6 +1276,7 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.116.67.8
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.116.101.220 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.119.167.248 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.139.54.2 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.139.79.161 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.142.131.147 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.163.155.77 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=18.163.176.215 gateway="" routing-table=main
@@ -6001,6 +6002,7 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.173.121.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.173.126.86 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.201.225.240 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.224.125.54 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.225.157.157 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.226.17.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.226.37.21 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=43.226.39.44 gateway="" routing-table=main
@@ -6676,7 +6678,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.128.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.128.192 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.128.195 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.128.198 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.129.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.129.52 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.129.54 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=45.156.129.56 gateway="" routing-table=main
@@ -9845,6 +9846,7 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.2
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.21 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.22 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.23 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.25 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.26 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=64.205.72.27 gateway="" routing-table=main
@@ -12141,7 +12143,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.237.70.1
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.237.70.13 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.238.209.82 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.239.124.12 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.239.124.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.239.124.31 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.239.124.32 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=77.239.124.33 gateway="" routing-table=main
@@ -12976,6 +12977,7 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.1
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.20 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.21 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.22 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.26 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.27 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=86.38.187.28 gateway="" routing-table=main
@@ -17269,7 +17271,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.124.58.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.133.196.66 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.140.190.99 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.142.0.15 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.142.160.22 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.143.0.19 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.151.168.124 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=112.161.26.125 gateway="" routing-table=main
@@ -23139,6 +23140,9 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.93.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.106.248 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.115.190 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.128.17 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.153.68 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.153.92 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.153.136 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.154.89 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.168.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=134.122.173.236 gateway="" routing-table=main
@@ -24824,7 +24828,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.146.240
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.197.56.163 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.201.66.125 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.201.78.236 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.201.82.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.201.89.198 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.204.32.99 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=154.206.89.53 gateway="" routing-table=main
@@ -24887,7 +24890,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.1
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.16 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.17 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.18 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.29 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.30 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=156.225.1.31 gateway="" routing-table=main
@@ -25712,6 +25714,7 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.20 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.21 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.23 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.25 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.26 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=167.94.145.27 gateway="" routing-table=main
@@ -26054,7 +26057,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.105.163
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.105.183.161 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.105.197.234 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.110.223.9 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.110.223.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.110.223.117 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.110.223.173 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=172.110.223.179 gateway="" routing-table=main
@@ -29255,6 +29257,7 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.69.121.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.69.122.37 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.70.186.193 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.71.69.198 gateway="" routing-table=main
+add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.73.23.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.73.23.161 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.73.23.162 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=185.76.78.13 gateway="" routing-table=main
@@ -33065,7 +33068,6 @@ add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.21 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.22 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.23 gateway="" routing-table=main
-add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.24 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.25 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.26 gateway="" routing-table=main
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=205.210.31.28 gateway="" routing-table=main
