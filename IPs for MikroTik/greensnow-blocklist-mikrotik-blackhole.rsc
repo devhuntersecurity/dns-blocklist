@@ -1,4 +1,4 @@
-# Generated on -10-2026T12:37:00Z, source: https://blocklist.greensnow.co/greensnow.txt
+# Generated on -10-2026T20:41:00Z, source: https://blocklist.greensnow.co/greensnow.txt
 /ip route
 remove [find comment="GreenSnow Blocklist Blackhole"]
 add blackhole comment="GreenSnow Blocklist Blackhole" disabled=no dst-address=<DOCTYPE html> gateway="" routing-table=main
