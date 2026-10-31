@@ -1,5 +1,5 @@
 
-name: IDGuard DNS - Source Inventory
+name: IDGuard DNS - Source Deduplication
 
 on:
   workflow_dispatch:
@@ -10,89 +10,215 @@ permissions:
 jobs:
   inventory:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Inspect DNS source files
+      - name: Analyze and Deduplicate DNS Sources
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
+          import sqlite3
+          import os
 
-          ROOTS = [
-              "BlockList_DB",
-              "WhiteList DB",
-              "Unbound Config/Data"
-          ]
+          ROOTS = {
+              "BlockList_DB": "block",
+              "WhiteList DB": "allow",
+              "Unbound Config/Data": "block"
+          }
 
           pattern = re.compile(
-              r'^\s*local-zone:\s*"([^"]+)"\s+(always_nxdomain|always_transparent)\s*$',
+              r'^\s*local-zone:\s*"([^"]+)"\s+'
+              r'(always_nxdomain|always_transparent)\s*$',
               re.IGNORECASE
           )
+
+          db_path = "/tmp/idguard-dedup.sqlite"
+          if os.path.exists(db_path):
+              os.remove(db_path)
+
+          db = sqlite3.connect(db_path)
+          db.execute("PRAGMA journal_mode=OFF")
+          db.execute("PRAGMA synchronous=OFF")
+          db.execute("PRAGMA temp_store=FILE")
+          db.execute("PRAGMA cache_size=-65536")
+
+          db.execute("""
+              CREATE TABLE domains (
+                  domain TEXT PRIMARY KEY
+              ) WITHOUT ROWID
+          """)
+
+          db.execute("""
+              CREATE TABLE entries (
+                  domain TEXT NOT NULL,
+                  source_type TEXT NOT NULL,
+                  category TEXT NOT NULL,
+                  PRIMARY KEY (domain, source_type, category)
+              ) WITHOUT ROWID
+          """)
 
           total_files = 0
           total_bytes = 0
           total_entries = 0
           reverse_entries = 0
+          invalid_entries = 0
           tld_entries = 0
 
-          print("=== IDGUARD DNS SOURCE INVENTORY ===")
+          print("=== IDGUARD DNS DEDUPLICATION ===")
 
-          for root_name in ROOTS:
+          for root_name, source_type in ROOTS.items():
               root = Path(root_name)
 
               if not root.exists():
-                  print(f"\n[NOT FOUND] {root_name}")
+                  print(f"[NOT FOUND] {root_name}")
                   continue
 
-              print(f"\n--- {root_name} ---")
+              print(f"\n--- SCANNING {root_name} ---")
 
               for path in sorted(root.rglob("*")):
                   if not path.is_file():
                       continue
 
-                  size = path.stat().st_size
-                  files_entries = 0
-                  files_reverse = 0
-                  files_tld = 0
+                  total_files += 1
+                  total_bytes += path.stat().st_size
+                  relative = path.relative_to(root)
 
-                  with path.open("r", encoding="utf-8", errors="replace") as f:
-                      for line in f:
+                  if root_name == "BlockList_DB":
+                      category = (
+                          relative.parts[0]
+                          if len(relative.parts) > 1
+                          else "Uncategorized"
+                      )
+                  elif root_name == "WhiteList DB":
+                      category = path.stem
+                  else:
+                      category = "TrustPositif Komdigi"
+
+                  file_entries = 0
+
+                  with path.open(
+                      "r", encoding="utf-8", errors="replace"
+                  ) as source:
+                      for line in source:
                           match = pattern.match(line)
                           if not match:
                               continue
 
                           domain = match.group(1).lower().rstrip(".")
+                          action = match.group(2).lower()
+
                           if not domain:
+                              invalid_entries += 1
                               continue
 
-                          files_entries += 1
+                          if domain.endswith(
+                              (".in-addr.arpa", ".ip6.arpa")
+                          ):
+                              reverse_entries += 1
+                              continue
 
-                          if domain.endswith((".in-addr.arpa", ".ip6.arpa")):
-                              files_reverse += 1
-                          elif "." not in domain:
-                              files_tld += 1
+                          if (
+                              (source_type == "block"
+                               and action != "always_nxdomain")
+                              or
+                              (source_type == "allow"
+                               and action != "always_transparent")
+                          ):
+                              invalid_entries += 1
+                              continue
 
-                  total_files += 1
-                  total_bytes += size
-                  total_entries += files_entries
-                  reverse_entries += files_reverse
-                  tld_entries += files_tld
+                          total_entries += 1
+                          file_entries += 1
+
+                          if "." not in domain:
+                              tld_entries += 1
+
+                          db.execute(
+                              "INSERT OR IGNORE INTO domains VALUES (?)",
+                              (domain,)
+                          )
+
+                          db.execute(
+                              "INSERT OR IGNORE INTO entries VALUES (?, ?, ?)",
+                              (domain, source_type, category)
+                          )
 
                   print(
-                      f"{path} | {size:,} bytes | "
-                      f"{files_entries:,} entries | "
-                      f"reverse: {files_reverse:,} | "
-                      f"TLD: {files_tld:,}"
+                      f"{path} | {file_entries:,} valid entries"
                   )
 
-          print("\n=== TOTAL ===")
+                  db.commit()
+
+          db.commit()
+
+          unique_domains = db.execute(
+              "SELECT COUNT(*) FROM domains"
+          ).fetchone()[0]
+
+          unique_block = db.execute(
+              "SELECT COUNT(DISTINCT domain) FROM entries "
+              "WHERE source_type='block'"
+          ).fetchone()[0]
+
+          unique_allow = db.execute(
+              "SELECT COUNT(DISTINCT domain) FROM entries "
+              "WHERE source_type='allow'"
+          ).fetchone()[0]
+
+          overlap = db.execute("""
+              SELECT COUNT(*)
+              FROM domains d
+              WHERE EXISTS (
+                  SELECT 1 FROM entries e
+                  WHERE e.domain=d.domain AND e.source_type='block'
+              )
+              AND EXISTS (
+                  SELECT 1 FROM entries e
+                  WHERE e.domain=d.domain AND e.source_type='allow'
+              )
+          """).fetchone()[0]
+
+          unique_tld = db.execute("""
+              SELECT COUNT(*)
+              FROM domains
+              WHERE instr(domain, '.') = 0
+          """).fetchone()[0]
+
+          print("\n=== TOTAL DEDUPLICATION ===")
           print(f"Files scanned: {total_files:,}")
-          print(f"Total size: {total_bytes:,} bytes")
-          print(f"Local-zone entries: {total_entries:,}")
-          print(f"Reverse DNS entries: {reverse_entries:,}")
-          print(f"TLD zone entries: {tld_entries:,}")
-          print("Inventory completed. No D1 data was modified.")
+          print(f"Source size: {total_bytes:,} bytes")
+          print(f"Valid entries: {total_entries:,}")
+          print(f"Unique domains: {unique_domains:,}")
+          print(
+              f"Duplicate occurrences: "
+              f"{total_entries - unique_domains:,}"
+          )
+          print(f"Unique blocklist domains: {unique_block:,}")
+          print(f"Unique whitelist domains: {unique_allow:,}")
+          print(f"Block/Whitelist overlaps: {overlap:,}")
+          print(f"Reverse DNS excluded: {reverse_entries:,}")
+          print(f"Invalid action entries: {invalid_entries:,}")
+          print(f"TLD entries: {tld_entries:,}")
+          print(f"Unique TLD rules: {unique_tld:,}")
+
+          print("\n=== UNIQUE DOMAINS BY CATEGORY ===")
+
+          for row in db.execute("""
+              SELECT source_type, category, COUNT(DISTINCT domain)
+              FROM entries
+              GROUP BY source_type, category
+              ORDER BY source_type, category
+          """):
+              print(
+                  f"{row[0]} | {row[1]} | {row[2]:,} unique domains"
+              )
+
+          db.close()
+
+          print("\nDeduplication completed.")
+          print("Cloudflare D1 was NOT modified.")
           PY
