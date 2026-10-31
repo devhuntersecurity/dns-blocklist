@@ -1,4 +1,4 @@
-# Generated on -10-2026T04:00:00Z, source: https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/ips/tif.txt
+# Generated on -10-2026T12:51:00Z, source: https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/ips/tif.txt
 /ip route
 remove [find comment="Hagezi TIF Blackhole"]
 add blackhole comment="Hagezi TIF Blackhole" disabled=no dst-address=1.0.218.230 gateway="" routing-table=main
