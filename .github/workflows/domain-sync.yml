@@ -1,0 +1,98 @@
+
+name: IDGuard DNS - Source Inventory
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Inspect DNS source files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          ROOTS = [
+              "BlockList_DB",
+              "WhiteList DB",
+              "Unbound Config/Data"
+          ]
+
+          pattern = re.compile(
+              r'^\s*local-zone:\s*"([^"]+)"\s+(always_nxdomain|always_transparent)\s*$',
+              re.IGNORECASE
+          )
+
+          total_files = 0
+          total_bytes = 0
+          total_entries = 0
+          reverse_entries = 0
+          tld_entries = 0
+
+          print("=== IDGUARD DNS SOURCE INVENTORY ===")
+
+          for root_name in ROOTS:
+              root = Path(root_name)
+
+              if not root.exists():
+                  print(f"\n[NOT FOUND] {root_name}")
+                  continue
+
+              print(f"\n--- {root_name} ---")
+
+              for path in sorted(root.rglob("*")):
+                  if not path.is_file():
+                      continue
+
+                  size = path.stat().st_size
+                  files_entries = 0
+                  files_reverse = 0
+                  files_tld = 0
+
+                  with path.open("r", encoding="utf-8", errors="replace") as f:
+                      for line in f:
+                          match = pattern.match(line)
+                          if not match:
+                              continue
+
+                          domain = match.group(1).lower().rstrip(".")
+                          if not domain:
+                              continue
+
+                          files_entries += 1
+
+                          if domain.endswith((".in-addr.arpa", ".ip6.arpa")):
+                              files_reverse += 1
+                          elif "." not in domain:
+                              files_tld += 1
+
+                  total_files += 1
+                  total_bytes += size
+                  total_entries += files_entries
+                  reverse_entries += files_reverse
+                  tld_entries += files_tld
+
+                  print(
+                      f"{path} | {size:,} bytes | "
+                      f"{files_entries:,} entries | "
+                      f"reverse: {files_reverse:,} | "
+                      f"TLD: {files_tld:,}"
+                  )
+
+          print("\n=== TOTAL ===")
+          print(f"Files scanned: {total_files:,}")
+          print(f"Total size: {total_bytes:,} bytes")
+          print(f"Local-zone entries: {total_entries:,}")
+          print(f"Reverse DNS entries: {reverse_entries:,}")
+          print(f"TLD zone entries: {tld_entries:,}")
+          print("Inventory completed. No D1 data was modified.")
+          PY
