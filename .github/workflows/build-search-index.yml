@@ -340,6 +340,10 @@ jobs:
                   f"{domain_count} domains, {size} bytes"
               )
 
+          # ==========================================
+          # GENERATE MANIFEST WITH UTC TIMESTAMP
+          # ==========================================
+
           commit = os.environ["GITHUB_SHA"]
           generated_at = datetime.now(timezone.utc).isoformat()
 
@@ -347,7 +351,7 @@ jobs:
               "project": "IDGuard DNS",
               "format_version": 1,
               "generated_from_commit": commit,
-	      "generated_at": generated_at,
+              "generated_at": generated_at,
               "storage_branch": "search-index",
               "storage_path": "Search_Index",
               "hash_algorithm": "SHA-256",
