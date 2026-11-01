@@ -18,7 +18,7 @@ jobs:
 
       - name: Analyze and Deduplicate DNS Sources
         run: |
-          python3 - <<'PY'
+          python3 - <<'PY' | tee inventory-report.txt
           from pathlib import Path
           import re
           import sqlite3
@@ -37,10 +37,12 @@ jobs:
           )
 
           db_path = "/tmp/idguard-dedup.sqlite"
+
           if os.path.exists(db_path):
               os.remove(db_path)
 
           db = sqlite3.connect(db_path)
+
           db.execute("PRAGMA journal_mode=OFF")
           db.execute("PRAGMA synchronous=OFF")
           db.execute("PRAGMA temp_store=FILE")
@@ -71,6 +73,7 @@ jobs:
           print("=== IDGUARD DNS DEDUPLICATION ===")
 
           for root_name, source_type in ROOTS.items():
+
               root = Path(root_name)
 
               if not root.exists():
@@ -80,11 +83,13 @@ jobs:
               print(f"\n--- SCANNING {root_name} ---")
 
               for path in sorted(root.rglob("*")):
+
                   if not path.is_file():
                       continue
 
                   total_files += 1
                   total_bytes += path.stat().st_size
+
                   relative = path.relative_to(root)
 
                   if root_name == "BlockList_DB":
@@ -93,18 +98,25 @@ jobs:
                           if len(relative.parts) > 1
                           else "Uncategorized"
                       )
+
                   elif root_name == "WhiteList DB":
                       category = path.stem
+
                   else:
                       category = "TrustPositif Komdigi"
 
                   file_entries = 0
 
                   with path.open(
-                      "r", encoding="utf-8", errors="replace"
+                      "r",
+                      encoding="utf-8",
+                      errors="replace"
                   ) as source:
+
                       for line in source:
+
                           match = pattern.match(line)
+
                           if not match:
                               continue
 
@@ -122,11 +134,11 @@ jobs:
                               continue
 
                           if (
-                              (source_type == "block"
-                               and action != "always_nxdomain")
-                              or
-                              (source_type == "allow"
-                               and action != "always_transparent")
+                              source_type == "block"
+                              and action != "always_nxdomain"
+                          ) or (
+                              source_type == "allow"
+                              and action != "always_transparent"
                           ):
                               invalid_entries += 1
                               continue
@@ -159,26 +171,30 @@ jobs:
               "SELECT COUNT(*) FROM domains"
           ).fetchone()[0]
 
-          unique_block = db.execute(
-              "SELECT COUNT(DISTINCT domain) FROM entries "
-              "WHERE source_type='block'"
-          ).fetchone()[0]
+          unique_block = db.execute("""
+              SELECT COUNT(DISTINCT domain)
+              FROM entries
+              WHERE source_type='block'
+          """).fetchone()[0]
 
-          unique_allow = db.execute(
-              "SELECT COUNT(DISTINCT domain) FROM entries "
-              "WHERE source_type='allow'"
-          ).fetchone()[0]
+          unique_allow = db.execute("""
+              SELECT COUNT(DISTINCT domain)
+              FROM entries
+              WHERE source_type='allow'
+          """).fetchone()[0]
 
           overlap = db.execute("""
               SELECT COUNT(*)
               FROM domains d
               WHERE EXISTS (
                   SELECT 1 FROM entries e
-                  WHERE e.domain=d.domain AND e.source_type='block'
+                  WHERE e.domain=d.domain
+                  AND e.source_type='block'
               )
               AND EXISTS (
                   SELECT 1 FROM entries e
-                  WHERE e.domain=d.domain AND e.source_type='allow'
+                  WHERE e.domain=d.domain
+                  AND e.source_type='allow'
               )
           """).fetchone()[0]
 
@@ -193,10 +209,12 @@ jobs:
           print(f"Source size: {total_bytes:,} bytes")
           print(f"Valid entries: {total_entries:,}")
           print(f"Unique domains: {unique_domains:,}")
+
           print(
               f"Duplicate occurrences: "
               f"{total_entries - unique_domains:,}"
           )
+
           print(f"Unique blocklist domains: {unique_block:,}")
           print(f"Unique whitelist domains: {unique_allow:,}")
           print(f"Block/Whitelist overlaps: {overlap:,}")
@@ -208,13 +226,18 @@ jobs:
           print("\n=== UNIQUE DOMAINS BY CATEGORY ===")
 
           for row in db.execute("""
-              SELECT source_type, category, COUNT(DISTINCT domain)
+              SELECT
+                  source_type,
+                  category,
+                  COUNT(DISTINCT domain)
               FROM entries
               GROUP BY source_type, category
               ORDER BY source_type, category
           """):
+
               print(
-                  f"{row[0]} | {row[1]} | {row[2]:,} unique domains"
+                  f"{row[0]} | {row[1]} | "
+                  f"{row[2]:,} unique domains"
               )
 
           db.close()
@@ -222,3 +245,12 @@ jobs:
           print("\nDeduplication completed.")
           print("Cloudflare D1 was NOT modified.")
           PY
+
+      - name: Upload Inventory Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: idguard-dns-inventory-report
+          path: inventory-report.txt
+          if-no-files-found: warn
+          retention-days: 30
