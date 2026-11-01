@@ -1,0 +1,146 @@
+
+name: IDGuard DNS - Build Search Index
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Build and measure index shards
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import gzip
+          import json
+          import re
+          from pathlib import Path
+          from collections import defaultdict
+
+          ROOTS = {
+              "BlockList_DB": "block",
+              "WhiteList DB": "allow",
+              "Unbound Config/Data": "block"
+          }
+
+          pattern = re.compile(
+              r'^\s*local-zone:\s*"([^"]+)"\s+'
+              r'(always_nxdomain|always_transparent)\s*(?:#.*)?$'
+          )
+
+          shards = defaultdict(dict)
+          total = 0
+          valid = 0
+
+          for root, source_type in ROOTS.items():
+              base = Path(root)
+              if not base.exists():
+                  continue
+
+              for file in base.rglob("*.conf"):
+                  relative = str(file)
+                  category = (
+                      file.relative_to(base).parts[0]
+                      if root == "BlockList_DB"
+                      and len(file.relative_to(base).parts) > 1
+                      else (
+                          "TrustPositif Komdigi"
+                          if root == "Unbound Config/Data"
+                          else file.stem
+                      )
+                  )
+
+                  with file.open(
+                      "r", encoding="utf-8", errors="ignore"
+                  ) as stream:
+                      for line in stream:
+                          match = pattern.match(line)
+                          if not match:
+                              continue
+
+                          domain, action = match.groups()
+                          domain = domain.lower().rstrip(".")
+
+                          if not domain or domain.endswith(
+                              (".in-addr.arpa", ".ip6.arpa")
+                          ):
+                              continue
+
+                          if action == "always_nxdomain":
+                              kind = "block"
+                          elif action == "always_transparent":
+                              kind = "allow"
+                          else:
+                              continue
+
+                          if kind != source_type:
+                              continue
+
+                          key = hashlib.sha256(
+                              domain.encode()
+                          ).hexdigest()[:2]
+
+                          record = {
+                              "domain": domain,
+                              "type": kind,
+                              "category": category,
+                              "path": relative,
+                              "file": file.name
+                          }
+
+                          shards[key][domain] = record
+                          total += 1
+
+          output = Path("index-test")
+          output.mkdir(exist_ok=True)
+
+          compressed_total = 0
+          largest = 0
+
+          for key, records in shards.items():
+              raw = "\n".join(
+                  json.dumps(item, separators=(",", ":"))
+                  for item in records.values()
+              ).encode()
+
+              packed = gzip.compress(raw, compresslevel=6)
+              target = output / f"{key}.jsonl.gz"
+              target.write_bytes(packed)
+
+              compressed_total += len(packed)
+              largest = max(largest, len(packed))
+              valid += len(records)
+
+          report = {
+              "source_entries": total,
+              "unique_index_entries": valid,
+              "shards_created": len(shards),
+              "compressed_size_bytes": compressed_total,
+              "largest_shard_bytes": largest
+          }
+
+          Path("index-report.json").write_text(
+              json.dumps(report, indent=2),
+              encoding="utf-8"
+          )
+
+          print(json.dumps(report, indent=2))
+          PY
+
+      - name: Upload index test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: idguard-search-index-test
+          path: |
+            index-report.json
+            index-test/
+          retention-days: 7
