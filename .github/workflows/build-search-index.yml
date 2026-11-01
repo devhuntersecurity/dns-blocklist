@@ -2,6 +2,18 @@
 name: IDGuard DNS - Build Search Index
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'BlockList_DB/**'
+      - 'WhiteList DB/**'
+      - 'Unbound Config/Data/**'
+      - '.github/workflows/build-search-index.yml'
+
+  schedule:
+    - cron: '0 */8 * * *'
+
   workflow_dispatch:
 
 permissions:
@@ -40,6 +52,7 @@ jobs:
           import sqlite3
           import os
           import shutil
+          from datetime import datetime, timezone
           from pathlib import Path
           from itertools import groupby
 
@@ -328,11 +341,13 @@ jobs:
               )
 
           commit = os.environ["GITHUB_SHA"]
+          generated_at = datetime.now(timezone.utc).isoformat()
 
           manifest = {
               "project": "IDGuard DNS",
               "format_version": 1,
               "generated_from_commit": commit,
+	      "generated_at": generated_at,
               "storage_branch": "search-index",
               "storage_path": "Search_Index",
               "hash_algorithm": "SHA-256",
