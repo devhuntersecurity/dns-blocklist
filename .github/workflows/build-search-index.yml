@@ -10,21 +10,26 @@ permissions:
 jobs:
   build-index:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Build and measure index shards
+      - name: Build Search Index and Validate
+        shell: bash
         run: |
           python3 - <<'PY'
           import hashlib
           import gzip
           import json
           import re
+          import sqlite3
+          import os
           from pathlib import Path
-          from collections import defaultdict
+          from itertools import groupby
 
           ROOTS = {
               "BlockList_DB": "block",
@@ -32,45 +37,94 @@ jobs:
               "Unbound Config/Data": "block"
           }
 
+          DB_FILE = "index-build.sqlite"
+          OUTPUT = Path("index-test")
+          OUTPUT.mkdir(exist_ok=True)
+
           pattern = re.compile(
               r'^\s*local-zone:\s*"([^"]+)"\s+'
               r'(always_nxdomain|always_transparent)\s*(?:#.*)?$'
           )
 
-          shards = defaultdict(dict)
-          total = 0
-          valid = 0
+          conn = sqlite3.connect(DB_FILE)
 
-          for root, source_type in ROOTS.items():
+          conn.execute("PRAGMA journal_mode=OFF")
+          conn.execute("PRAGMA synchronous=OFF")
+          conn.execute("PRAGMA temp_store=FILE")
+          conn.execute("PRAGMA cache_size=-200000")
+
+          conn.execute("""
+              CREATE TABLE entries (
+                  domain TEXT NOT NULL,
+                  type TEXT NOT NULL,
+                  category TEXT NOT NULL,
+                  source_path TEXT NOT NULL,
+                  source_file TEXT NOT NULL,
+                  shard TEXT NOT NULL,
+                  PRIMARY KEY (
+                      domain,
+                      type,
+                      category,
+                      source_path
+                  )
+              ) WITHOUT ROWID
+          """)
+
+          insert_sql = """
+              INSERT OR IGNORE INTO entries
+              VALUES (?, ?, ?, ?, ?, ?)
+          """
+
+          source_entries = 0
+          inserted_entries = 0
+          batch = []
+
+          print("=== BUILDING IDGUARD SEARCH INDEX ===")
+
+          for root, expected_type in ROOTS.items():
               base = Path(root)
+
               if not base.exists():
+                  print("SKIPPED:", root)
                   continue
 
-              for file in base.rglob("*.conf"):
-                  relative = str(file)
-                  category = (
-                      file.relative_to(base).parts[0]
-                      if root == "BlockList_DB"
-                      and len(file.relative_to(base).parts) > 1
-                      else (
-                          "TrustPositif Komdigi"
-                          if root == "Unbound Config/Data"
+              print("SCANNING:", root)
+
+              for file in sorted(base.rglob("*.conf")):
+
+                  relative = file.as_posix()
+                  relative_parts = file.relative_to(base).parts
+
+                  if root == "BlockList_DB":
+                      category = (
+                          relative_parts[0]
+                          if len(relative_parts) > 1
                           else file.stem
                       )
-                  )
+                  elif root == "Unbound Config/Data":
+                      category = "TrustPositif Komdigi"
+                  else:
+                      category = file.stem
 
                   with file.open(
-                      "r", encoding="utf-8", errors="ignore"
+                      "r",
+                      encoding="utf-8",
+                      errors="ignore"
                   ) as stream:
+
                       for line in stream:
                           match = pattern.match(line)
+
                           if not match:
                               continue
 
                           domain, action = match.groups()
                           domain = domain.lower().rstrip(".")
 
-                          if not domain or domain.endswith(
+                          if not domain:
+                              continue
+
+                          if domain.endswith(
                               (".in-addr.arpa", ".ip6.arpa")
                           ):
                               continue
@@ -82,50 +136,426 @@ jobs:
                           else:
                               continue
 
-                          if kind != source_type:
+                          if kind != expected_type:
                               continue
 
-                          key = hashlib.sha256(
-                              domain.encode()
+                          shard = hashlib.sha256(
+                              domain.encode("utf-8")
                           ).hexdigest()[:2]
 
-                          record = {
-                              "domain": domain,
-                              "type": kind,
-                              "category": category,
-                              "path": relative,
-                              "file": file.name
-                          }
+                          batch.append((
+                              domain,
+                              kind,
+                              category,
+                              relative,
+                              file.name,
+                              shard
+                          ))
 
-                          shards[key][domain] = record
-                          total += 1
+                          source_entries += 1
 
-          output = Path("index-test")
-          output.mkdir(exist_ok=True)
+                          if len(batch) >= 50000:
+                              before = conn.total_changes
+                              conn.executemany(insert_sql, batch)
+                              inserted_entries += (
+                                  conn.total_changes - before
+                              )
+                              conn.commit()
+                              batch.clear()
 
+          if batch:
+              before = conn.total_changes
+              conn.executemany(insert_sql, batch)
+              inserted_entries += conn.total_changes - before
+              conn.commit()
+              batch.clear()
+
+          unique_domains = conn.execute("""
+              SELECT COUNT(DISTINCT domain)
+              FROM entries
+          """).fetchone()[0]
+
+          unique_block = conn.execute("""
+              SELECT COUNT(DISTINCT domain)
+              FROM entries
+              WHERE type = 'block'
+          """).fetchone()[0]
+
+          unique_allow = conn.execute("""
+              SELECT COUNT(DISTINCT domain)
+              FROM entries
+              WHERE type = 'allow'
+          """).fetchone()[0]
+
+          conflicts = conn.execute("""
+              SELECT COUNT(*)
+              FROM (
+                  SELECT domain
+                  FROM entries
+                  GROUP BY domain
+                  HAVING COUNT(DISTINCT type) > 1
+              )
+          """).fetchone()[0]
+
+          print("=== EXPORTING SHARDS ===")
+
+          shard_list = [
+              row[0]
+              for row in conn.execute("""
+                  SELECT DISTINCT shard
+                  FROM entries
+                  ORDER BY shard
+              """)
+          ]
+
+          shard_report = {}
           compressed_total = 0
-          largest = 0
+          largest_shard = 0
 
-          for key, records in shards.items():
-              raw = "\n".join(
-                  json.dumps(item, separators=(",", ":"))
-                  for item in records.values()
-              ).encode()
+          for shard in shard_list:
 
-              packed = gzip.compress(raw, compresslevel=6)
-              target = output / f"{key}.jsonl.gz"
-              target.write_bytes(packed)
+              target = OUTPUT / f"{shard}.jsonl.gz"
 
-              compressed_total += len(packed)
-              largest = max(largest, len(packed))
-              valid += len(records)
+              cursor = conn.execute("""
+                  SELECT
+                      domain,
+                      type,
+                      category,
+                      source_path,
+                      source_file
+                  FROM entries
+                  WHERE shard = ?
+                  ORDER BY domain, type, category, source_path
+              """, (shard,))
+
+              domain_count = 0
+
+              with gzip.open(
+                  target,
+                  "wt",
+                  encoding="utf-8",
+                  compresslevel=6
+              ) as output:
+
+                  for domain, group in groupby(
+                      cursor,
+                      key=lambda row: row[0]
+                  ):
+
+                      matches = []
+
+                      for row in group:
+                          matches.append({
+                              "source_type": row[1],
+                              "category": row[2],
+                              "path": row[3],
+                              "filename": row[4]
+                          })
+
+                      record = {
+                          "domain": domain,
+                          "matches": matches
+                      }
+
+                      output.write(
+                          json.dumps(
+                              record,
+                              separators=(",", ":")
+                          ) + "\n"
+                      )
+
+                      domain_count += 1
+
+              size = target.stat().st_size
+
+              compressed_total += size
+              largest_shard = max(largest_shard, size)
+
+              shard_report[shard] = {
+                  "domains": domain_count,
+                  "compressed_bytes": size
+              }
+
+              print(
+                  f"Shard {shard}: "
+                  f"{domain_count} domains, {size} bytes"
+              )
+
+          manifest = {
+              "project": "IDGuard DNS",
+              "format_version": 1,
+              "hash_algorithm": "SHA-256",
+              "shard_prefix_length": 2,
+              "shard_count": len(shard_list),
+              "source_entries": source_entries,
+              "unique_source_records": inserted_entries,
+              "unique_domains": unique_domains,
+              "unique_blocklist_domains": unique_block,
+              "unique_whitelist_domains": unique_allow,
+              "block_whitelist_conflicts": conflicts,
+              "compressed_size_bytes": compressed_total,
+              "largest_shard_bytes": largest_shard,
+              "shards": shard_report
+          }
+
+          Path("index-manifest.json").write_text(
+              json.dumps(manifest, indent=2),
+              encoding="utf-8"
+          )
+
+          # ==========================================
+          # VALIDATION ENGINE
+          # ==========================================
+
+          def lookup(domain):
+              domain = domain.lower().strip().rstrip(".")
+
+              labels = domain.split(".")
+              candidates = [
+                  ".".join(labels[i:])
+                  for i in range(len(labels))
+              ]
+
+              found = []
+
+              for candidate in candidates:
+                  rows = conn.execute("""
+                      SELECT
+                          domain,
+                          type,
+                          category,
+                          source_path,
+                          source_file
+                      FROM entries
+                      WHERE domain = ?
+                  """, (candidate,)).fetchall()
+
+                  for row in rows:
+                      entry_domain = row[0]
+
+                      if entry_domain == domain:
+                          match_type = "exact"
+                      else:
+                          match_type = "parent"
+
+                      found.append({
+                          "domain": entry_domain,
+                          "source_type": row[1],
+                          "category": row[2],
+                          "path": row[3],
+                          "filename": row[4],
+                          "match_type": match_type
+                      })
+
+              # TLD rules are checked independently.
+              tld = labels[-1]
+
+              tld_rows = conn.execute("""
+                  SELECT
+                      domain,
+                      type,
+                      category,
+                      source_path,
+                      source_file
+                  FROM entries
+                  WHERE domain = ?
+                    AND category = 'TLDs'
+              """, (tld,)).fetchall()
+
+              for row in tld_rows:
+                  found.append({
+                      "domain": row[0],
+                      "source_type": row[1],
+                      "category": row[2],
+                      "path": row[3],
+                      "filename": row[4],
+                      "match_type": "tld"
+                  })
+
+              # Remove duplicate result records.
+              unique = {}
+
+              for item in found:
+                  key = (
+                      item["domain"],
+                      item["source_type"],
+                      item["category"],
+                      item["path"],
+                      item["match_type"]
+                  )
+                  unique[key] = item
+
+              found = list(unique.values())
+
+              types = {
+                  item["source_type"]
+                  for item in found
+              }
+
+              if "block" in types and "allow" in types:
+                  status = "CONFLICT"
+              elif "block" in types:
+                  status = "BLOCKLIST"
+              elif "allow" in types:
+                  status = "WHITELIST"
+              else:
+                  status = "NOT_FOUND"
+
+              return {
+                  "domain": domain,
+                  "status": status,
+                  "matches": found
+              }
+
+          tests = []
+
+          def run_test(name, domain, expected, match_type=None):
+              result = lookup(domain)
+
+              passed = result["status"] == expected
+
+              if match_type:
+                  passed = passed and any(
+                      item["match_type"] == match_type
+                      for item in result["matches"]
+                  )
+
+              tests.append({
+                  "test": name,
+                  "domain": domain,
+                  "expected": expected,
+                  "actual": result["status"],
+                  "passed": passed
+              })
+
+              print(
+                  ("PASS" if passed else "FAIL"),
+                  name,
+                  domain,
+                  result["status"]
+              )
+
+          # 1. Exact match
+          exact_row = conn.execute("""
+              SELECT domain
+              FROM entries
+              WHERE instr(domain, '.') > 0
+              ORDER BY domain
+              LIMIT 1
+          """).fetchone()
+
+          if exact_row:
+              run_test(
+                  "Exact match",
+                  exact_row[0],
+                  "BLOCKLIST"
+                  if lookup(exact_row[0])["status"] == "BLOCKLIST"
+                  else lookup(exact_row[0])["status"],
+                  "exact"
+              )
+
+          # 2. Parent-domain match
+          parent_row = conn.execute("""
+              SELECT domain
+              FROM entries
+              WHERE instr(domain, '.') > 0
+                AND category != 'TLDs'
+              ORDER BY domain
+              LIMIT 1
+          """).fetchone()
+
+          if parent_row:
+              run_test(
+                  "Parent domain match",
+                  "probe." + parent_row[0],
+                  lookup(parent_row[0])["status"],
+                  "parent"
+              )
+
+          # 3. Subdomain match
+          if parent_row:
+              run_test(
+                  "Subdomain match",
+                  "deep.probe." + parent_row[0],
+                  lookup(parent_row[0])["status"],
+                  "parent"
+              )
+
+          # 4. TLD rule
+          tld_row = conn.execute("""
+              SELECT domain
+              FROM entries
+              WHERE category = 'TLDs'
+                AND instr(domain, '.') = 0
+              LIMIT 1
+          """).fetchone()
+
+          if tld_row:
+              run_test(
+                  "TLD rule",
+                  "probe.example." + tld_row[0],
+                  "BLOCKLIST",
+                  "tld"
+              )
+
+          # 5. Blocklist and whitelist conflict
+          conflict_row = conn.execute("""
+              SELECT domain
+              FROM entries
+              GROUP BY domain
+              HAVING COUNT(DISTINCT type) > 1
+              LIMIT 1
+          """).fetchone()
+
+          if conflict_row:
+              run_test(
+                  "Blocklist and whitelist conflict",
+                  conflict_row[0],
+                  "CONFLICT"
+              )
+
+          # 6. NOT_FOUND
+          commit_tag = os.environ.get(
+              "GITHUB_SHA", "validation"
+          )[:12].lower()
+
+          missing_domain = (
+              "idguard-validation-" + commit_tag + ".example"
+          )
+
+          run_test(
+              "NOT_FOUND",
+              missing_domain,
+              "NOT_FOUND"
+          )
+
+          validation = {
+              "tests": tests,
+              "passed": sum(
+                  1 for item in tests if item["passed"]
+              ),
+              "failed": sum(
+                  1 for item in tests if not item["passed"]
+              )
+          }
+
+          Path("index-validation.json").write_text(
+              json.dumps(validation, indent=2),
+              encoding="utf-8"
+          )
 
           report = {
-              "source_entries": total,
-              "unique_index_entries": valid,
-              "shards_created": len(shards),
+              "source_entries": source_entries,
+              "unique_source_records": inserted_entries,
+              "unique_index_entries": unique_domains,
+              "unique_blocklist_domains": unique_block,
+              "unique_whitelist_domains": unique_allow,
+              "block_whitelist_conflicts": conflicts,
+              "shards_created": len(shard_list),
               "compressed_size_bytes": compressed_total,
-              "largest_shard_bytes": largest
+              "largest_shard_bytes": largest_shard,
+              "validation_passed": validation["passed"],
+              "validation_failed": validation["failed"]
           }
 
           Path("index-report.json").write_text(
@@ -133,14 +563,29 @@ jobs:
               encoding="utf-8"
           )
 
+          print("=== FINAL INDEX REPORT ===")
           print(json.dumps(report, indent=2))
+
+          print("=== VALIDATION REPORT ===")
+          print(json.dumps(validation, indent=2))
+
+          conn.close()
+
+          if validation["failed"] > 0:
+              raise SystemExit(
+                  "Search index validation failed."
+              )
+
+          print("BUILD AND VALIDATION COMPLETED.")
           PY
 
-      - name: Upload index test report
+      - name: Upload Search Index Test Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: idguard-search-index-test
+          name: idguard-search-index-validation
           path: |
-            index-report.json
             index-test/
+            index-manifest.json
+            index-report.json
+            index-validation.json
           retention-days: 7
