@@ -5,7 +5,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: idguard-search-index
+  cancel-in-progress: false
 
 jobs:
   build-index:
@@ -17,10 +21,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          persist-credentials: true
 
-      - name: Build Search Index and Validate
+      - name: Build, Validate and Publish Search Index
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
+          set -euo pipefail
+
           python3 - <<'PY'
           import hashlib
           import gzip
@@ -28,6 +39,7 @@ jobs:
           import re
           import sqlite3
           import os
+          import shutil
           from pathlib import Path
           from itertools import groupby
 
@@ -38,8 +50,12 @@ jobs:
           }
 
           DB_FILE = "index-build.sqlite"
-          OUTPUT = Path("index-test")
-          OUTPUT.mkdir(exist_ok=True)
+          OUTPUT = Path("Search_Index")
+
+          if OUTPUT.exists():
+              shutil.rmtree(OUTPUT)
+
+          OUTPUT.mkdir(parents=True)
 
           pattern = re.compile(
               r'^\s*local-zone:\s*"([^"]+)"\s+'
@@ -82,11 +98,13 @@ jobs:
           print("=== BUILDING IDGUARD SEARCH INDEX ===")
 
           for root, expected_type in ROOTS.items():
+
               base = Path(root)
 
               if not base.exists():
-                  print("SKIPPED:", root)
-                  continue
+                  raise RuntimeError(
+                      f"Required source directory missing: {root}"
+                  )
 
               print("SCANNING:", root)
 
@@ -101,8 +119,10 @@ jobs:
                           if len(relative_parts) > 1
                           else file.stem
                       )
+
                   elif root == "Unbound Config/Data":
                       category = "TrustPositif Komdigi"
+
                   else:
                       category = file.stem
 
@@ -113,6 +133,7 @@ jobs:
                   ) as stream:
 
                       for line in stream:
+
                           match = pattern.match(line)
 
                           if not match:
@@ -131,8 +152,10 @@ jobs:
 
                           if action == "always_nxdomain":
                               kind = "block"
+
                           elif action == "always_transparent":
                               kind = "allow"
+
                           else:
                               continue
 
@@ -155,18 +178,34 @@ jobs:
                           source_entries += 1
 
                           if len(batch) >= 50000:
+
                               before = conn.total_changes
-                              conn.executemany(insert_sql, batch)
+
+                              conn.executemany(
+                                  insert_sql,
+                                  batch
+                              )
+
                               inserted_entries += (
                                   conn.total_changes - before
                               )
+
                               conn.commit()
                               batch.clear()
 
           if batch:
+
               before = conn.total_changes
-              conn.executemany(insert_sql, batch)
-              inserted_entries += conn.total_changes - before
+
+              conn.executemany(
+                  insert_sql,
+                  batch
+              )
+
+              inserted_entries += (
+                  conn.total_changes - before
+              )
+
               conn.commit()
               batch.clear()
 
@@ -197,7 +236,7 @@ jobs:
               )
           """).fetchone()[0]
 
-          print("=== EXPORTING SHARDS ===")
+          print("=== EXPORTING 256 SEARCH SHARDS ===")
 
           shard_list = [
               row[0]
@@ -225,7 +264,11 @@ jobs:
                       source_file
                   FROM entries
                   WHERE shard = ?
-                  ORDER BY domain, type, category, source_path
+                  ORDER BY
+                      domain,
+                      type,
+                      category,
+                      source_path
               """, (shard,))
 
               domain_count = 0
@@ -245,6 +288,7 @@ jobs:
                       matches = []
 
                       for row in group:
+
                           matches.append({
                               "source_type": row[1],
                               "category": row[2],
@@ -269,7 +313,10 @@ jobs:
               size = target.stat().st_size
 
               compressed_total += size
-              largest_shard = max(largest_shard, size)
+              largest_shard = max(
+                  largest_shard,
+                  size
+              )
 
               shard_report[shard] = {
                   "domains": domain_count,
@@ -281,9 +328,14 @@ jobs:
                   f"{domain_count} domains, {size} bytes"
               )
 
+          commit = os.environ["GITHUB_SHA"]
+
           manifest = {
               "project": "IDGuard DNS",
               "format_version": 1,
+              "generated_from_commit": commit,
+              "storage_branch": "search-index",
+              "storage_path": "Search_Index",
               "hash_algorithm": "SHA-256",
               "shard_prefix_length": 2,
               "shard_count": len(shard_list),
@@ -298,7 +350,9 @@ jobs:
               "shards": shard_report
           }
 
-          Path("index-manifest.json").write_text(
+          manifest_path = OUTPUT / "manifest.json"
+
+          manifest_path.write_text(
               json.dumps(manifest, indent=2),
               encoding="utf-8"
           )
@@ -308,9 +362,18 @@ jobs:
           # ==========================================
 
           def lookup(domain):
+
               domain = domain.lower().strip().rstrip(".")
 
+              if not domain:
+                  return {
+                      "domain": domain,
+                      "status": "NOT_FOUND",
+                      "matches": []
+                  }
+
               labels = domain.split(".")
+
               candidates = [
                   ".".join(labels[i:])
                   for i in range(len(labels))
@@ -319,6 +382,7 @@ jobs:
               found = []
 
               for candidate in candidates:
+
                   rows = conn.execute("""
                       SELECT
                           domain,
@@ -331,15 +395,15 @@ jobs:
                   """, (candidate,)).fetchall()
 
                   for row in rows:
-                      entry_domain = row[0]
 
-                      if entry_domain == domain:
-                          match_type = "exact"
-                      else:
-                          match_type = "parent"
+                      match_type = (
+                          "exact"
+                          if row[0] == domain
+                          else "parent"
+                      )
 
                       found.append({
-                          "domain": entry_domain,
+                          "domain": row[0],
                           "source_type": row[1],
                           "category": row[2],
                           "path": row[3],
@@ -347,35 +411,10 @@ jobs:
                           "match_type": match_type
                       })
 
-              # TLD rules are checked independently.
-              tld = labels[-1]
-
-              tld_rows = conn.execute("""
-                  SELECT
-                      domain,
-                      type,
-                      category,
-                      source_path,
-                      source_file
-                  FROM entries
-                  WHERE domain = ?
-                    AND category = 'TLDs'
-              """, (tld,)).fetchall()
-
-              for row in tld_rows:
-                  found.append({
-                      "domain": row[0],
-                      "source_type": row[1],
-                      "category": row[2],
-                      "path": row[3],
-                      "filename": row[4],
-                      "match_type": "tld"
-                  })
-
-              # Remove duplicate result records.
               unique = {}
 
               for item in found:
+
                   key = (
                       item["domain"],
                       item["source_type"],
@@ -383,6 +422,7 @@ jobs:
                       item["path"],
                       item["match_type"]
                   )
+
                   unique[key] = item
 
               found = list(unique.values())
@@ -394,10 +434,13 @@ jobs:
 
               if "block" in types and "allow" in types:
                   status = "CONFLICT"
+
               elif "block" in types:
                   status = "BLOCKLIST"
+
               elif "allow" in types:
                   status = "WHITELIST"
+
               else:
                   status = "NOT_FOUND"
 
@@ -409,14 +452,21 @@ jobs:
 
           tests = []
 
-          def run_test(name, domain, expected, match_type=None):
+          def run_test(
+              name,
+              domain,
+              expected,
+              required_match=None
+          ):
+
               result = lookup(domain)
 
               passed = result["status"] == expected
 
-              if match_type:
+              if required_match:
+
                   passed = passed and any(
-                      item["match_type"] == match_type
+                      item["match_type"] == required_match
                       for item in result["matches"]
                   )
 
@@ -436,25 +486,37 @@ jobs:
               )
 
           # 1. Exact match
+
           exact_row = conn.execute("""
               SELECT domain
               FROM entries
               WHERE instr(domain, '.') > 0
+                AND category != 'TLDs'
               ORDER BY domain
               LIMIT 1
           """).fetchone()
 
           if exact_row:
+
+              exact_domain = exact_row[0]
+              expected = lookup(exact_domain)["status"]
+
               run_test(
                   "Exact match",
-                  exact_row[0],
-                  "BLOCKLIST"
-                  if lookup(exact_row[0])["status"] == "BLOCKLIST"
-                  else lookup(exact_row[0])["status"],
+                  exact_domain,
+                  expected,
                   "exact"
               )
 
+          # Unique probe prefix for hierarchy tests.
+
+          probe = (
+              "idguard-probe-"
+              + commit[:12].lower()
+          )
+
           # 2. Parent-domain match
+
           parent_row = conn.execute("""
               SELECT domain
               FROM entries
@@ -465,23 +527,28 @@ jobs:
           """).fetchone()
 
           if parent_row:
+
+              parent = parent_row[0]
+              expected = lookup(parent)["status"]
+
               run_test(
                   "Parent domain match",
-                  "probe." + parent_row[0],
-                  lookup(parent_row[0])["status"],
+                  probe + "." + parent,
+                  expected,
                   "parent"
               )
 
-          # 3. Subdomain match
-          if parent_row:
+              # 3. Subdomain match
+
               run_test(
                   "Subdomain match",
-                  "deep.probe." + parent_row[0],
-                  lookup(parent_row[0])["status"],
+                  "deep." + probe + "." + parent,
+                  expected,
                   "parent"
               )
 
           # 4. TLD rule
+
           tld_row = conn.execute("""
               SELECT domain
               FROM entries
@@ -491,14 +558,18 @@ jobs:
           """).fetchone()
 
           if tld_row:
+
+              tld = tld_row[0]
+
               run_test(
                   "TLD rule",
-                  "probe.example." + tld_row[0],
+                  "probe.example." + tld,
                   "BLOCKLIST",
-                  "tld"
+                  "parent"
               )
 
           # 5. Blocklist and whitelist conflict
+
           conflict_row = conn.execute("""
               SELECT domain
               FROM entries
@@ -508,6 +579,7 @@ jobs:
           """).fetchone()
 
           if conflict_row:
+
               run_test(
                   "Blocklist and whitelist conflict",
                   conflict_row[0],
@@ -515,12 +587,11 @@ jobs:
               )
 
           # 6. NOT_FOUND
-          commit_tag = os.environ.get(
-              "GITHUB_SHA", "validation"
-          )[:12].lower()
 
           missing_domain = (
-              "idguard-validation-" + commit_tag + ".example"
+              "idguard-validation-"
+              + commit[:12].lower()
+              + ".invalid"
           )
 
           run_test(
@@ -532,10 +603,12 @@ jobs:
           validation = {
               "tests": tests,
               "passed": sum(
-                  1 for item in tests if item["passed"]
+                  1 for item in tests
+                  if item["passed"]
               ),
               "failed": sum(
-                  1 for item in tests if not item["passed"]
+                  1 for item in tests
+                  if not item["passed"]
               )
           }
 
@@ -569,23 +642,67 @@ jobs:
           print("=== VALIDATION REPORT ===")
           print(json.dumps(validation, indent=2))
 
-          conn.close()
-
           if validation["failed"] > 0:
               raise SystemExit(
-                  "Search index validation failed."
+                  "Validation failed. Publishing cancelled."
               )
+
+          if validation["passed"] != 6:
+              raise SystemExit(
+                  "Expected six successful validation tests."
+              )
+
+          if unique_domains == 0 or len(shard_list) == 0:
+              raise SystemExit(
+                  "Empty index. Publishing cancelled."
+              )
+
+          conn.close()
 
           print("BUILD AND VALIDATION COMPLETED.")
           PY
 
-      - name: Upload Search Index Test Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: idguard-search-index-validation
-          path: |
-            index-test/
-            index-manifest.json
-            index-report.json
-            index-validation.json
-          retention-days: 7
+      - name: Prepare Dedicated Publication Branch
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p publication
+          cp -a Search_Index publication/
+
+          cd publication
+
+          git init -b search-index
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add Search_Index
+
+          git commit -m "Publish IDGuard DNS Search Index"
+
+          git remote add origin \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          git push --force origin search-index
+
+          echo "Search index successfully published."
+
+      - name: Publish Build Summary
+        if: success()
+        shell: bash
+        run: |
+          {
+            echo "# IDGuard DNS Search Index"
+            echo ""
+            echo "Publication status: SUCCESS"
+            echo ""
+            echo "Branch: search-index"
+            echo "Directory: Search_Index/"
+            echo ""
+            echo "Manifest:"
+            echo "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/search-index/Search_Index/manifest.json"
+            echo ""
+            echo "Validation: 6 tests passed"
+          } >> "$GITHUB_STEP_SUMMARY"
