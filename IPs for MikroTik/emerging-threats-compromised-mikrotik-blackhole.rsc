@@ -1,4 +1,4 @@
-# Generated on -11-2026T12:24:00Z, source: https://rules.emergingthreats.net/blockrules/compromised-ips.txt
+# Generated on -11-2026T20:29:00Z, source: https://rules.emergingthreats.net/blockrules/compromised-ips.txt
 /ip route
 remove [find comment="Emerging Threats Compromised IPs Blackhole"]
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=101.206.210.3 gateway="" routing-table=main
