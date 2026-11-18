@@ -1,4 +1,4 @@
-# Generated on -11-2026T03:45:00Z, source: https://rules.emergingthreats.net/blockrules/compromised-ips.txt
+# Generated on -11-2026T11:58:00Z, source: https://rules.emergingthreats.net/blockrules/compromised-ips.txt
 /ip route
 remove [find comment="Emerging Threats Compromised IPs Blackhole"]
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=101.32.116.104 gateway="" routing-table=main
@@ -8,11 +8,12 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=101.47.28.226 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=101.59.102.62 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=101.79.167.183 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=101.96.192.45 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=102.220.161.119 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=102.220.161.173 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=102.220.161.174 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.102.46.200 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.130.90.169 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.132.1.231 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.143.239.193 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.159.2.113 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.161.16.196 gateway="" routing-table=main
@@ -23,6 +24,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.39.213.200 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.41.206.80 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.42.57.15 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.62.238.130 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.85.85.159 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.90.224.22 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=103.9.184.22 gateway="" routing-table=main
@@ -33,6 +35,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=104.199.18.55 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=104.199.27.11 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=104.253.134.203 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=106.52.185.206 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=107.150.123.48 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=107.170.19.20 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=107.172.23.112 gateway="" routing-table=main
@@ -47,11 +50,11 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=115.190.110.42 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=115.190.165.165 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=115.190.63.199 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.1.113 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.147.250 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.149.119 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.150.166 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.154.161 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.155.23 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.158.0 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.159.141 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=116.110.213.222 gateway="" routing-table=main
@@ -93,13 +96,14 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=123.25.1.226 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=123.30.238.247 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.123.19.5 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.156.139.21 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.156.202.105 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.156.204.3 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.156.205.117 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.156.225.252 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.217.230.149 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=124.221.156.168 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=125.130.102.172 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=12.5.181.107 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=128.185.33.227 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=130.12.181.23 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=130.12.182.107 gateway="" routing-table=main
@@ -107,7 +111,6 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=134.209.10.90 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=135.125.238.245 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=137.74.162.180 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=138.197.209.58 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=138.197.216.53 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=138.226.239.233 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=138.226.239.234 gateway="" routing-table=main
@@ -128,6 +131,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=147.135.200.242 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=150.136.20.229 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=150.242.14.129 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=151.242.43.71 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=152.32.225.117 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=152.32.236.102 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=15.235.193.26 gateway="" routing-table=main
@@ -191,7 +195,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=171.243.149.132 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=171.243.149.187 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=171.243.150.47 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=171.243.150.48 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=171.243.151.8 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=173.212.225.162 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=176.102.49.129 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=176.103.15.188 gateway="" routing-table=main
@@ -205,7 +209,6 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=181.104.43.225 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=181.114.126.130 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=181.56.174.63 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=182.95.123.166 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=183.239.22.123 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=184.34.91.75 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=185.100.85.48 gateway="" routing-table=main
@@ -223,6 +226,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=185.87.121.1 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=185.95.164.16 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=186.4.135.194 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=187.40.215.162 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=187.51.219.26 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=187.58.66.231 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=187.9.232.170 gateway="" routing-table=main
@@ -256,11 +260,9 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=206.81.23.5 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.109.36 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.121.84 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.132.201 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.136.167 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.157.156 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.20.206 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.236.246 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.36.218 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.64.233 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=207.175.66.99 gateway="" routing-table=main
@@ -296,6 +298,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=23.132.164.245 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=23.132.164.246 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=23.251.133.108 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=24.211.86.244 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=27.0.135.12 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=27.0.135.6 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=27.102.116.43 gateway="" routing-table=main
@@ -329,7 +332,6 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.1.253.65 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.140.17.70 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.140.19.217 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.140.43.21 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.140.64.102 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.156.10.56 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.156.128.161 gateway="" routing-table=main
@@ -358,14 +360,11 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.76.74.18 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.77.111.204 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.77.120.206 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.77.30.113 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.77.90.164 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.78.118.97 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.78.26.141 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.79.12.66 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.79.192.173 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=34.79.89.168 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.187.231.181 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.187.25.156 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.187.63.236 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.187.70.55 gateway="" routing-table=main
@@ -381,6 +380,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.153.174 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.155.103 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.158.12 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.163.211 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.163.251 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.169.253 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.172.81 gateway="" routing-table=main
@@ -391,6 +391,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.206.183.188 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.107.114 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.107.20 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.11.252 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.11.30 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.114.22 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.116.204 gateway="" routing-table=main
@@ -407,6 +408,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.136.244 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.140.20 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.149.174 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.150.149 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.160.35 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.160.81 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.166.45 gateway="" routing-table=main
@@ -430,6 +432,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.22.77 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.228.188 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.229.50 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.236.56 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.237.238 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.237.56 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.239.143 gateway="" routing-table=main
@@ -444,6 +447,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.53.157 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.54.75 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.65.254 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.7.114 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.7.122 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.73.217 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.210.75.155 gateway="" routing-table=main
@@ -464,7 +468,6 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.233.54.204 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.240.110.140 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.241.210.215 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.241.224.162 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.87.173.189 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=35.88.9.149 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=36.137.75.115 gateway="" routing-table=main
@@ -510,6 +513,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=47.76.24.186 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=49.173.65.19 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=49.249.63.195 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=49.51.184.212 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=49.51.244.147 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=5.101.116.122 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=5.101.157.184 gateway="" routing-table=main
@@ -544,7 +548,6 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.239.124.175 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.239.124.252 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.90.185.128 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.91.102.215 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.91.71.23 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.91.71.24 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=77.91.71.25 gateway="" routing-table=main
@@ -554,6 +557,7 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=80.253.22.34 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=80.94.95.109 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=81.181.129.218 gateway="" routing-table=main
+add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=82.209.148.60 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=83.172.35.6 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=83.233.255.240 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=83.64.209.118 gateway="" routing-table=main
@@ -563,13 +567,11 @@ add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no d
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=85.11.167.38 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=86.62.112.66 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=89.175.14.98 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=89.176.0.185 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=89.233.105.182 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=91.185.47.28 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=91.203.6.58 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=91.92.43.221 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=92.205.239.91 gateway="" routing-table=main
-add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=92.218.123.85 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=93.152.221.19 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=93.152.221.36 gateway="" routing-table=main
 add blackhole comment="Emerging Threats Compromised IPs Blackhole" disabled=no dst-address=93.152.221.51 gateway="" routing-table=main
