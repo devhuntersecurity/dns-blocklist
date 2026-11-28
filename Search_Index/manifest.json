@@ -1,0 +1,1045 @@
+{
+  "project": "IDGuard DNS",
+  "format_version": 1,
+  "generated_from_commit": "6adc48acc2b0ba8354194090e77dca118753048d",
+  "generated_at": "2026-11-28T21:58:52.076182+00:00",
+  "storage_branch": "search-index",
+  "storage_path": "Search_Index",
+  "hash_algorithm": "SHA-256",
+  "shard_prefix_length": 2,
+  "shard_count": 256,
+  "source_entries": 8453393,
+  "unique_source_records": 8453379,
+  "unique_domains": 7647670,
+  "unique_blocklist_domains": 7600461,
+  "unique_whitelist_domains": 47643,
+  "block_whitelist_conflicts": 434,
+  "compressed_size_bytes": 78607111,
+  "largest_shard_bytes": 311573,
+  "shards": {
+    "00": {
+      "domains": 29933,
+      "compressed_bytes": 307532
+    },
+    "01": {
+      "domains": 29960,
+      "compressed_bytes": 307936
+    },
+    "02": {
+      "domains": 30105,
+      "compressed_bytes": 308508
+    },
+    "03": {
+      "domains": 29939,
+      "compressed_bytes": 307691
+    },
+    "04": {
+      "domains": 29998,
+      "compressed_bytes": 307734
+    },
+    "05": {
+      "domains": 30092,
+      "compressed_bytes": 309546
+    },
+    "06": {
+      "domains": 30006,
+      "compressed_bytes": 307687
+    },
+    "07": {
+      "domains": 29744,
+      "compressed_bytes": 306330
+    },
+    "08": {
+      "domains": 29907,
+      "compressed_bytes": 306842
+    },
+    "09": {
+      "domains": 29882,
+      "compressed_bytes": 306606
+    },
+    "0a": {
+      "domains": 29878,
+      "compressed_bytes": 306699
+    },
+    "0b": {
+      "domains": 29835,
+      "compressed_bytes": 306477
+    },
+    "0c": {
+      "domains": 29791,
+      "compressed_bytes": 306052
+    },
+    "0d": {
+      "domains": 30093,
+      "compressed_bytes": 309345
+    },
+    "0e": {
+      "domains": 29880,
+      "compressed_bytes": 308047
+    },
+    "0f": {
+      "domains": 29667,
+      "compressed_bytes": 304105
+    },
+    "10": {
+      "domains": 30008,
+      "compressed_bytes": 308660
+    },
+    "11": {
+      "domains": 29665,
+      "compressed_bytes": 305730
+    },
+    "12": {
+      "domains": 29748,
+      "compressed_bytes": 307379
+    },
+    "13": {
+      "domains": 30037,
+      "compressed_bytes": 309160
+    },
+    "14": {
+      "domains": 29767,
+      "compressed_bytes": 306762
+    },
+    "15": {
+      "domains": 29811,
+      "compressed_bytes": 306428
+    },
+    "16": {
+      "domains": 29946,
+      "compressed_bytes": 307826
+    },
+    "17": {
+      "domains": 30017,
+      "compressed_bytes": 308172
+    },
+    "18": {
+      "domains": 29662,
+      "compressed_bytes": 305380
+    },
+    "19": {
+      "domains": 29967,
+      "compressed_bytes": 308467
+    },
+    "1a": {
+      "domains": 29751,
+      "compressed_bytes": 305728
+    },
+    "1b": {
+      "domains": 29569,
+      "compressed_bytes": 304755
+    },
+    "1c": {
+      "domains": 29775,
+      "compressed_bytes": 305358
+    },
+    "1d": {
+      "domains": 30067,
+      "compressed_bytes": 308995
+    },
+    "1e": {
+      "domains": 29653,
+      "compressed_bytes": 304898
+    },
+    "1f": {
+      "domains": 29982,
+      "compressed_bytes": 307118
+    },
+    "20": {
+      "domains": 29578,
+      "compressed_bytes": 305076
+    },
+    "21": {
+      "domains": 29878,
+      "compressed_bytes": 308247
+    },
+    "22": {
+      "domains": 29855,
+      "compressed_bytes": 307031
+    },
+    "23": {
+      "domains": 29721,
+      "compressed_bytes": 305026
+    },
+    "24": {
+      "domains": 29803,
+      "compressed_bytes": 306640
+    },
+    "25": {
+      "domains": 29909,
+      "compressed_bytes": 308139
+    },
+    "26": {
+      "domains": 30039,
+      "compressed_bytes": 307779
+    },
+    "27": {
+      "domains": 29870,
+      "compressed_bytes": 307481
+    },
+    "28": {
+      "domains": 29796,
+      "compressed_bytes": 306148
+    },
+    "29": {
+      "domains": 29800,
+      "compressed_bytes": 306620
+    },
+    "2a": {
+      "domains": 29955,
+      "compressed_bytes": 308050
+    },
+    "2b": {
+      "domains": 30048,
+      "compressed_bytes": 309564
+    },
+    "2c": {
+      "domains": 30072,
+      "compressed_bytes": 309331
+    },
+    "2d": {
+      "domains": 29965,
+      "compressed_bytes": 307521
+    },
+    "2e": {
+      "domains": 29927,
+      "compressed_bytes": 307416
+    },
+    "2f": {
+      "domains": 29935,
+      "compressed_bytes": 308074
+    },
+    "30": {
+      "domains": 29936,
+      "compressed_bytes": 307089
+    },
+    "31": {
+      "domains": 29716,
+      "compressed_bytes": 305820
+    },
+    "32": {
+      "domains": 30076,
+      "compressed_bytes": 309197
+    },
+    "33": {
+      "domains": 29791,
+      "compressed_bytes": 305898
+    },
+    "34": {
+      "domains": 29793,
+      "compressed_bytes": 307880
+    },
+    "35": {
+      "domains": 29683,
+      "compressed_bytes": 305783
+    },
+    "36": {
+      "domains": 29663,
+      "compressed_bytes": 305767
+    },
+    "37": {
+      "domains": 29937,
+      "compressed_bytes": 307252
+    },
+    "38": {
+      "domains": 29929,
+      "compressed_bytes": 307567
+    },
+    "39": {
+      "domains": 29846,
+      "compressed_bytes": 307653
+    },
+    "3a": {
+      "domains": 29879,
+      "compressed_bytes": 306582
+    },
+    "3b": {
+      "domains": 29786,
+      "compressed_bytes": 306359
+    },
+    "3c": {
+      "domains": 29506,
+      "compressed_bytes": 302842
+    },
+    "3d": {
+      "domains": 29794,
+      "compressed_bytes": 306142
+    },
+    "3e": {
+      "domains": 29619,
+      "compressed_bytes": 303998
+    },
+    "3f": {
+      "domains": 29672,
+      "compressed_bytes": 303891
+    },
+    "40": {
+      "domains": 29793,
+      "compressed_bytes": 308203
+    },
+    "41": {
+      "domains": 29780,
+      "compressed_bytes": 305804
+    },
+    "42": {
+      "domains": 29964,
+      "compressed_bytes": 308810
+    },
+    "43": {
+      "domains": 29618,
+      "compressed_bytes": 303572
+    },
+    "44": {
+      "domains": 29997,
+      "compressed_bytes": 308850
+    },
+    "45": {
+      "domains": 29943,
+      "compressed_bytes": 308433
+    },
+    "46": {
+      "domains": 29937,
+      "compressed_bytes": 307108
+    },
+    "47": {
+      "domains": 29700,
+      "compressed_bytes": 305158
+    },
+    "48": {
+      "domains": 29943,
+      "compressed_bytes": 307651
+    },
+    "49": {
+      "domains": 29775,
+      "compressed_bytes": 305622
+    },
+    "4a": {
+      "domains": 30168,
+      "compressed_bytes": 311268
+    },
+    "4b": {
+      "domains": 29829,
+      "compressed_bytes": 306120
+    },
+    "4c": {
+      "domains": 29734,
+      "compressed_bytes": 305415
+    },
+    "4d": {
+      "domains": 29778,
+      "compressed_bytes": 306774
+    },
+    "4e": {
+      "domains": 29992,
+      "compressed_bytes": 308642
+    },
+    "4f": {
+      "domains": 30079,
+      "compressed_bytes": 309109
+    },
+    "50": {
+      "domains": 29793,
+      "compressed_bytes": 308122
+    },
+    "51": {
+      "domains": 29982,
+      "compressed_bytes": 307944
+    },
+    "52": {
+      "domains": 29902,
+      "compressed_bytes": 307018
+    },
+    "53": {
+      "domains": 29945,
+      "compressed_bytes": 308124
+    },
+    "54": {
+      "domains": 29957,
+      "compressed_bytes": 308393
+    },
+    "55": {
+      "domains": 29727,
+      "compressed_bytes": 305416
+    },
+    "56": {
+      "domains": 29868,
+      "compressed_bytes": 306333
+    },
+    "57": {
+      "domains": 29879,
+      "compressed_bytes": 305563
+    },
+    "58": {
+      "domains": 29571,
+      "compressed_bytes": 304530
+    },
+    "59": {
+      "domains": 29816,
+      "compressed_bytes": 306470
+    },
+    "5a": {
+      "domains": 29835,
+      "compressed_bytes": 306494
+    },
+    "5b": {
+      "domains": 29976,
+      "compressed_bytes": 307364
+    },
+    "5c": {
+      "domains": 29754,
+      "compressed_bytes": 305598
+    },
+    "5d": {
+      "domains": 29997,
+      "compressed_bytes": 307582
+    },
+    "5e": {
+      "domains": 29658,
+      "compressed_bytes": 303984
+    },
+    "5f": {
+      "domains": 29844,
+      "compressed_bytes": 307481
+    },
+    "60": {
+      "domains": 30071,
+      "compressed_bytes": 308679
+    },
+    "61": {
+      "domains": 29964,
+      "compressed_bytes": 307803
+    },
+    "62": {
+      "domains": 29437,
+      "compressed_bytes": 302981
+    },
+    "63": {
+      "domains": 29785,
+      "compressed_bytes": 308370
+    },
+    "64": {
+      "domains": 29882,
+      "compressed_bytes": 306537
+    },
+    "65": {
+      "domains": 29937,
+      "compressed_bytes": 307367
+    },
+    "66": {
+      "domains": 30067,
+      "compressed_bytes": 307796
+    },
+    "67": {
+      "domains": 29728,
+      "compressed_bytes": 304375
+    },
+    "68": {
+      "domains": 29972,
+      "compressed_bytes": 309154
+    },
+    "69": {
+      "domains": 29666,
+      "compressed_bytes": 305703
+    },
+    "6a": {
+      "domains": 29530,
+      "compressed_bytes": 303393
+    },
+    "6b": {
+      "domains": 30042,
+      "compressed_bytes": 309397
+    },
+    "6c": {
+      "domains": 29729,
+      "compressed_bytes": 306252
+    },
+    "6d": {
+      "domains": 29698,
+      "compressed_bytes": 305674
+    },
+    "6e": {
+      "domains": 29840,
+      "compressed_bytes": 306372
+    },
+    "6f": {
+      "domains": 29965,
+      "compressed_bytes": 308732
+    },
+    "70": {
+      "domains": 30046,
+      "compressed_bytes": 308815
+    },
+    "71": {
+      "domains": 29732,
+      "compressed_bytes": 305838
+    },
+    "72": {
+      "domains": 29816,
+      "compressed_bytes": 306728
+    },
+    "73": {
+      "domains": 29812,
+      "compressed_bytes": 305569
+    },
+    "74": {
+      "domains": 29898,
+      "compressed_bytes": 306352
+    },
+    "75": {
+      "domains": 29942,
+      "compressed_bytes": 308588
+    },
+    "76": {
+      "domains": 30088,
+      "compressed_bytes": 310969
+    },
+    "77": {
+      "domains": 30253,
+      "compressed_bytes": 311539
+    },
+    "78": {
+      "domains": 29842,
+      "compressed_bytes": 307208
+    },
+    "79": {
+      "domains": 29930,
+      "compressed_bytes": 306321
+    },
+    "7a": {
+      "domains": 29666,
+      "compressed_bytes": 305209
+    },
+    "7b": {
+      "domains": 29867,
+      "compressed_bytes": 305960
+    },
+    "7c": {
+      "domains": 29877,
+      "compressed_bytes": 307351
+    },
+    "7d": {
+      "domains": 29750,
+      "compressed_bytes": 303817
+    },
+    "7e": {
+      "domains": 29862,
+      "compressed_bytes": 307390
+    },
+    "7f": {
+      "domains": 29959,
+      "compressed_bytes": 308073
+    },
+    "80": {
+      "domains": 30047,
+      "compressed_bytes": 308661
+    },
+    "81": {
+      "domains": 30149,
+      "compressed_bytes": 309733
+    },
+    "82": {
+      "domains": 29858,
+      "compressed_bytes": 305862
+    },
+    "83": {
+      "domains": 29807,
+      "compressed_bytes": 306300
+    },
+    "84": {
+      "domains": 29577,
+      "compressed_bytes": 303278
+    },
+    "85": {
+      "domains": 29950,
+      "compressed_bytes": 308690
+    },
+    "86": {
+      "domains": 29676,
+      "compressed_bytes": 305112
+    },
+    "87": {
+      "domains": 30046,
+      "compressed_bytes": 308223
+    },
+    "88": {
+      "domains": 29808,
+      "compressed_bytes": 306438
+    },
+    "89": {
+      "domains": 29677,
+      "compressed_bytes": 305295
+    },
+    "8a": {
+      "domains": 29727,
+      "compressed_bytes": 305257
+    },
+    "8b": {
+      "domains": 29937,
+      "compressed_bytes": 308209
+    },
+    "8c": {
+      "domains": 30267,
+      "compressed_bytes": 310825
+    },
+    "8d": {
+      "domains": 29741,
+      "compressed_bytes": 306018
+    },
+    "8e": {
+      "domains": 29579,
+      "compressed_bytes": 304787
+    },
+    "8f": {
+      "domains": 29960,
+      "compressed_bytes": 306553
+    },
+    "90": {
+      "domains": 30232,
+      "compressed_bytes": 311159
+    },
+    "91": {
+      "domains": 29985,
+      "compressed_bytes": 308838
+    },
+    "92": {
+      "domains": 29838,
+      "compressed_bytes": 305270
+    },
+    "93": {
+      "domains": 29863,
+      "compressed_bytes": 306939
+    },
+    "94": {
+      "domains": 29854,
+      "compressed_bytes": 307827
+    },
+    "95": {
+      "domains": 29754,
+      "compressed_bytes": 305447
+    },
+    "96": {
+      "domains": 29770,
+      "compressed_bytes": 306231
+    },
+    "97": {
+      "domains": 30122,
+      "compressed_bytes": 309142
+    },
+    "98": {
+      "domains": 29911,
+      "compressed_bytes": 306716
+    },
+    "99": {
+      "domains": 29761,
+      "compressed_bytes": 306501
+    },
+    "9a": {
+      "domains": 29711,
+      "compressed_bytes": 305567
+    },
+    "9b": {
+      "domains": 29887,
+      "compressed_bytes": 306883
+    },
+    "9c": {
+      "domains": 29783,
+      "compressed_bytes": 305823
+    },
+    "9d": {
+      "domains": 29946,
+      "compressed_bytes": 308746
+    },
+    "9e": {
+      "domains": 29678,
+      "compressed_bytes": 306137
+    },
+    "9f": {
+      "domains": 29576,
+      "compressed_bytes": 304387
+    },
+    "a0": {
+      "domains": 30070,
+      "compressed_bytes": 309125
+    },
+    "a1": {
+      "domains": 29982,
+      "compressed_bytes": 308145
+    },
+    "a2": {
+      "domains": 30084,
+      "compressed_bytes": 309525
+    },
+    "a3": {
+      "domains": 29676,
+      "compressed_bytes": 306222
+    },
+    "a4": {
+      "domains": 29994,
+      "compressed_bytes": 308052
+    },
+    "a5": {
+      "domains": 29729,
+      "compressed_bytes": 306580
+    },
+    "a6": {
+      "domains": 29728,
+      "compressed_bytes": 305234
+    },
+    "a7": {
+      "domains": 29815,
+      "compressed_bytes": 306347
+    },
+    "a8": {
+      "domains": 29793,
+      "compressed_bytes": 306503
+    },
+    "a9": {
+      "domains": 30089,
+      "compressed_bytes": 310439
+    },
+    "aa": {
+      "domains": 29458,
+      "compressed_bytes": 303773
+    },
+    "ab": {
+      "domains": 29497,
+      "compressed_bytes": 303406
+    },
+    "ac": {
+      "domains": 29730,
+      "compressed_bytes": 306226
+    },
+    "ad": {
+      "domains": 30052,
+      "compressed_bytes": 308369
+    },
+    "ae": {
+      "domains": 29743,
+      "compressed_bytes": 306046
+    },
+    "af": {
+      "domains": 29864,
+      "compressed_bytes": 307297
+    },
+    "b0": {
+      "domains": 29662,
+      "compressed_bytes": 303762
+    },
+    "b1": {
+      "domains": 29819,
+      "compressed_bytes": 306308
+    },
+    "b2": {
+      "domains": 29724,
+      "compressed_bytes": 306319
+    },
+    "b3": {
+      "domains": 29779,
+      "compressed_bytes": 306632
+    },
+    "b4": {
+      "domains": 30101,
+      "compressed_bytes": 308006
+    },
+    "b5": {
+      "domains": 29988,
+      "compressed_bytes": 307776
+    },
+    "b6": {
+      "domains": 29670,
+      "compressed_bytes": 305480
+    },
+    "b7": {
+      "domains": 29806,
+      "compressed_bytes": 307451
+    },
+    "b8": {
+      "domains": 30065,
+      "compressed_bytes": 307584
+    },
+    "b9": {
+      "domains": 29888,
+      "compressed_bytes": 307693
+    },
+    "ba": {
+      "domains": 30167,
+      "compressed_bytes": 309887
+    },
+    "bb": {
+      "domains": 29897,
+      "compressed_bytes": 306588
+    },
+    "bc": {
+      "domains": 30052,
+      "compressed_bytes": 308899
+    },
+    "bd": {
+      "domains": 29948,
+      "compressed_bytes": 307519
+    },
+    "be": {
+      "domains": 29898,
+      "compressed_bytes": 307000
+    },
+    "bf": {
+      "domains": 29815,
+      "compressed_bytes": 306272
+    },
+    "c0": {
+      "domains": 29885,
+      "compressed_bytes": 307899
+    },
+    "c1": {
+      "domains": 29829,
+      "compressed_bytes": 306745
+    },
+    "c2": {
+      "domains": 29812,
+      "compressed_bytes": 306405
+    },
+    "c3": {
+      "domains": 30035,
+      "compressed_bytes": 309082
+    },
+    "c4": {
+      "domains": 29821,
+      "compressed_bytes": 307433
+    },
+    "c5": {
+      "domains": 30185,
+      "compressed_bytes": 308805
+    },
+    "c6": {
+      "domains": 29796,
+      "compressed_bytes": 306795
+    },
+    "c7": {
+      "domains": 29975,
+      "compressed_bytes": 308193
+    },
+    "c8": {
+      "domains": 29694,
+      "compressed_bytes": 305127
+    },
+    "c9": {
+      "domains": 30138,
+      "compressed_bytes": 310974
+    },
+    "ca": {
+      "domains": 30026,
+      "compressed_bytes": 309285
+    },
+    "cb": {
+      "domains": 29853,
+      "compressed_bytes": 306577
+    },
+    "cc": {
+      "domains": 29717,
+      "compressed_bytes": 305020
+    },
+    "cd": {
+      "domains": 29998,
+      "compressed_bytes": 309447
+    },
+    "ce": {
+      "domains": 30344,
+      "compressed_bytes": 311227
+    },
+    "cf": {
+      "domains": 30074,
+      "compressed_bytes": 309265
+    },
+    "d0": {
+      "domains": 29838,
+      "compressed_bytes": 305419
+    },
+    "d1": {
+      "domains": 30224,
+      "compressed_bytes": 310618
+    },
+    "d2": {
+      "domains": 29703,
+      "compressed_bytes": 305662
+    },
+    "d3": {
+      "domains": 29968,
+      "compressed_bytes": 307551
+    },
+    "d4": {
+      "domains": 29984,
+      "compressed_bytes": 309024
+    },
+    "d5": {
+      "domains": 29769,
+      "compressed_bytes": 306354
+    },
+    "d6": {
+      "domains": 29885,
+      "compressed_bytes": 307218
+    },
+    "d7": {
+      "domains": 30108,
+      "compressed_bytes": 308654
+    },
+    "d8": {
+      "domains": 29853,
+      "compressed_bytes": 305907
+    },
+    "d9": {
+      "domains": 29934,
+      "compressed_bytes": 306989
+    },
+    "da": {
+      "domains": 30013,
+      "compressed_bytes": 308177
+    },
+    "db": {
+      "domains": 29844,
+      "compressed_bytes": 306700
+    },
+    "dc": {
+      "domains": 29958,
+      "compressed_bytes": 306535
+    },
+    "dd": {
+      "domains": 29559,
+      "compressed_bytes": 303138
+    },
+    "de": {
+      "domains": 30083,
+      "compressed_bytes": 308415
+    },
+    "df": {
+      "domains": 29862,
+      "compressed_bytes": 306191
+    },
+    "e0": {
+      "domains": 29890,
+      "compressed_bytes": 308069
+    },
+    "e1": {
+      "domains": 29827,
+      "compressed_bytes": 306609
+    },
+    "e2": {
+      "domains": 29829,
+      "compressed_bytes": 305489
+    },
+    "e3": {
+      "domains": 29330,
+      "compressed_bytes": 301500
+    },
+    "e4": {
+      "domains": 30170,
+      "compressed_bytes": 309592
+    },
+    "e5": {
+      "domains": 30113,
+      "compressed_bytes": 309697
+    },
+    "e6": {
+      "domains": 29668,
+      "compressed_bytes": 305644
+    },
+    "e7": {
+      "domains": 29990,
+      "compressed_bytes": 308507
+    },
+    "e8": {
+      "domains": 29636,
+      "compressed_bytes": 305098
+    },
+    "e9": {
+      "domains": 29661,
+      "compressed_bytes": 305556
+    },
+    "ea": {
+      "domains": 29968,
+      "compressed_bytes": 307295
+    },
+    "eb": {
+      "domains": 30422,
+      "compressed_bytes": 311573
+    },
+    "ec": {
+      "domains": 30151,
+      "compressed_bytes": 310411
+    },
+    "ed": {
+      "domains": 29718,
+      "compressed_bytes": 304945
+    },
+    "ee": {
+      "domains": 30127,
+      "compressed_bytes": 307843
+    },
+    "ef": {
+      "domains": 30050,
+      "compressed_bytes": 308157
+    },
+    "f0": {
+      "domains": 30031,
+      "compressed_bytes": 309058
+    },
+    "f1": {
+      "domains": 29769,
+      "compressed_bytes": 306432
+    },
+    "f2": {
+      "domains": 29897,
+      "compressed_bytes": 306494
+    },
+    "f3": {
+      "domains": 29628,
+      "compressed_bytes": 304274
+    },
+    "f4": {
+      "domains": 29838,
+      "compressed_bytes": 305949
+    },
+    "f5": {
+      "domains": 30143,
+      "compressed_bytes": 309553
+    },
+    "f6": {
+      "domains": 29830,
+      "compressed_bytes": 306611
+    },
+    "f7": {
+      "domains": 29774,
+      "compressed_bytes": 305447
+    },
+    "f8": {
+      "domains": 30009,
+      "compressed_bytes": 307878
+    },
+    "f9": {
+      "domains": 29623,
+      "compressed_bytes": 304789
+    },
+    "fa": {
+      "domains": 29909,
+      "compressed_bytes": 307397
+    },
+    "fb": {
+      "domains": 30065,
+      "compressed_bytes": 308278
+    },
+    "fc": {
+      "domains": 29889,
+      "compressed_bytes": 306129
+    },
+    "fd": {
+      "domains": 29797,
+      "compressed_bytes": 306405
+    },
+    "fe": {
+      "domains": 29970,
+      "compressed_bytes": 308006
+    },
+    "ff": {
+      "domains": 30022,
+      "compressed_bytes": 309193
+    }
+  }
+}
